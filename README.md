@@ -48,6 +48,8 @@
 
 ## 2020/11/01 預計實作Layout
 
-![iPhone X, XS, 11 Pro – 1](D:\simon\VS_Project\XF_FreeDiving\Layout\iPhone X, XS, 11 Pro – 1.png)
+![FreeDiving_Layout](https://raw.githubusercontent.com/FocacciaSyin/XF_FreeDiving/master/Layout/iPhone%20X%2C%20XS%2C%2011%20Pro%20%E2%80%93%201.png)
+
+
 
  
