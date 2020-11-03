@@ -3,7 +3,7 @@
 
 - 記錄使用者該次閉氣時間
 
-- 使用Sqlite作為紀錄歷史紀錄的方式
+- 使用Sqlite作為紀錄**歷史紀錄**的方式
 
   
 
@@ -16,9 +16,11 @@
 1. sqlite-net-pcl
 2. Xamarin.Forms.PancakeView
 3. SkiaSharp (尚未使用)
-4. Xamarin.Forms 4.8
+4. Resizetizer.NT (讀取圖片用)
+5. Xamarin.Forms 4.8
    1. 此專案是使用Shell 樣板建立的
-   2. CarouselView
+   2. [CollectionView](https://docs.microsoft.com/zh-tw/xamarin/xamarin-forms/user-interface/collectionview/)
+      1. 成功使用SelectedItem可以找到選到的項目
    3. ListView
    4. [Frame](https://devblogs.microsoft.com/xamarin/xamarinforms-4-8-gradients-brushes/)
    5. [SwipeView](https://docs.microsoft.com/zh-tw/xamarin/xamarin-forms/user-interface/swipeview)
@@ -29,10 +31,19 @@
 
 - [ ] 依照自己製作的Layout建立畫面
 
-- [ ] 使用CarouselView 
+  - [ ] 使用者
+    - [x] 2020/11/03 先固定設定兩個使用者可以選擇即可
+    - [ ] 讓XamarinForms讀取使用者上傳的圖片
+  - [x] 紀錄種類
+  - [x] 計時
+  - [ ] 歷次紀錄
 
-  - [ ] 建立使用者清單
-  - [ ] 增加 2:00 & 2:30 & 3:00 .... 的選項
+- [ ] 整理應用程式的Style為可以共用
+
+- [x] 使用CollectionView
+
+  - [x] 建立使用者清單
+  - [x] 增加 2:00 & 2:30 & 3:00 .... 的選項
 
 - [ ] 可自行新增使用者列表
 

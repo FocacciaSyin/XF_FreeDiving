@@ -18,15 +18,40 @@ namespace XF_FreeDiving.ViewModels
 
         Stopwatch Stopwatch;
 
-        #region 畫面元件
-
-        private string _name;
-        public string Name
+        LogType _selectedLogType;
+        public LogType SelectedLogType
         {
-            get { return _name; }
-            set { SetProperty(ref _name, value); }
+            get
+            {
+                return _selectedLogType;
+            }
+            set
+            {
+                if (_selectedLogType != value)
+                {
+                    _selectedLogType = value;
+                }
+            }
         }
-        #endregion
+
+        User _selectedUser;
+
+        public User SelectedUser
+        {
+            get
+            {
+                return _selectedUser;
+            }
+            set
+            {
+                if (_selectedUser != value)
+                {
+                    _selectedUser = value;
+                }
+            }
+        }
+
+
 
         #region 按鈕顯示隱藏
         private bool _isStart = true;
@@ -45,7 +70,19 @@ namespace XF_FreeDiving.ViewModels
         }
         #endregion
 
+        private List<LogType> _logTypes;
+        public List<LogType> LogTypes
+        {
+            get { return _logTypes; }
+            set { SetProperty(ref _logTypes, value); }
+        }
 
+        private List<User> _users;
+        public List<User> Users
+        {
+            get { return _users; }
+            set { SetProperty(ref _users, value); }
+        }
 
         private TimeSpan _timer;
         public TimeSpan Timer
@@ -73,6 +110,18 @@ namespace XF_FreeDiving.ViewModels
                 DivingLogs = DivingLogs.OrderByDescending(r => r.ID).ToList();
             });
 
+            Users = new List<User>()
+            {
+                 new User(){ID=1,UserName="Woody", ImagePath="Image/Man.png"},
+                 new User(){ID=2,UserName="BenBen", ImagePath="Image/Woman.png"}
+            };
+
+            LogTypes = new List<LogType>()
+            {
+                new LogType(){ ID=1, Mode =  Models.LogType.紀錄種類.碼表  , TypeName="碼表" },
+                new LogType(){ ID=2, Mode = Models.LogType.紀錄種類.目標計時 , TypeName="2:00" },
+                new LogType(){ ID=3, Mode = Models.LogType.紀錄種類.目標計時 , TypeName="2:30" },
+            };
 
             //DivingLogs = new ObservableCollection<DivingLog>()
             //{
@@ -100,7 +149,7 @@ namespace XF_FreeDiving.ViewModels
             //執行 Insert
             DivingLog itemDivingLog = new DivingLog();
             itemDivingLog.ID = 0;
-            itemDivingLog.name = Name;
+            itemDivingLog.name = SelectedUser.UserName;
             itemDivingLog.time = Timer;
             //寫入資料到 Sqlite;
             Task.Run(async () =>
@@ -111,6 +160,9 @@ namespace XF_FreeDiving.ViewModels
             });
         }
 
+        /// <summary>
+        /// 開始計時
+        /// </summary>
         private void ExecuteStartTimer()
         {
             Stopwatch.Restart();
@@ -128,8 +180,5 @@ namespace XF_FreeDiving.ViewModels
         public ICommand OpenWebCommand { get; }
         public ICommand TimeStartCommand { get; set; }
         public ICommand TimeStopommand { get; set; }
-
-
-
     }
 }

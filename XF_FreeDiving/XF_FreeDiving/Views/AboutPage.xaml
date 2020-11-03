@@ -7,162 +7,230 @@
     xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
     xmlns:vm="clr-namespace:XF_FreeDiving.ViewModels"
     Title="{Binding Title}"
-    BackgroundColor="#FF9F74">
+    BackgroundColor="#3563AA">
 
     <ContentPage.BindingContext>
         <vm:AboutViewModel />
     </ContentPage.BindingContext>
+
     <ContentPage.Resources>
         <ResourceDictionary>
+            <!--  Start CollectionView背選擇到的Style  -->
+            <Style TargetType="StackLayout">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal" />
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="#01E3D6" />
+                                    <Setter Property="Opacity" Value="1" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+            <!--  End CollectionView背選擇到的Style  -->
             <Color x:Key="Accent">#96d1ff</Color>
         </ResourceDictionary>
     </ContentPage.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <!--  選擇使用者 Start  -->
-        <Label
-            Grid.Row="0"
-            Margin="25,10,0,0"
-            FontSize="Medium"
-            HorizontalTextAlignment="Start"
-            Text="使用者"
-            TextColor="White" />
-        <!--<CarouselView>
-            <CarouselView.ItemTemplate>
-                <DataTemplate />
-            </CarouselView.ItemTemplate>
-        </CarouselView>-->
-        <Picker
-            x:Name="pickerUserName"
-            Title="選擇使用者"
-            Grid.Row="1"
-            Margin="100,0"
-            SelectedItem="{Binding Name}"
-            TextColor="Black"
-            TitleColor="Black">
-            <Picker.ItemsSource>
-                <x:Array Type="{x:Type x:String}">
-                    <x:String>Woody</x:String>
-                    <x:String>Gaby</x:String>
-                </x:Array>
-            </Picker.ItemsSource>
-        </Picker>
-        <!--  選擇使用者 End  -->
-        <BoxView
-            Grid.Row="2"
-            BackgroundColor="#707070"
-            CornerRadius="40,40,0,0"
-            Opacity=".4"
-            HorizontalOptions="FillAndExpand" />
-        <BoxView
-            Grid.Row="2"
-            Margin="5,5,5,0"
-            BackgroundColor="#FBEFE4"
-            CornerRadius="40,40,0,0"
-            HorizontalOptions="FillAndExpand" />
-        <Grid Grid.Row="2">
+
+    <AbsoluteLayout>
+        <Image AbsoluteLayout.LayoutBounds="120,100,350,350" Source="Image/Whale.png" />
+        <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-
+            <!--  選擇使用者 Start  -->
             <Label
                 Grid.Row="0"
-                Margin="30,20,0,0"
+                Margin="25,10,0,0"
+                FontAttributes="Bold"
                 FontSize="Medium"
                 HorizontalTextAlignment="Start"
-                Text="紀錄種類" />
-            <ProgressBar
-                Grid.Row="2"
-                Margin="30,0"
-                Progress="0.5"
-                ProgressColor="Orange" />
+                Text="使用者"
+                TextColor="White" />
+            <CollectionView
+                x:Name="cvUsers"
+                Grid.Row="1"
+                Margin="40,10"
+                HeightRequest="100"
+                HorizontalScrollBarVisibility="Never"
+                ItemsLayout="HorizontalList"
+                ItemsSource="{Binding Users}"
+                SelectedItem="{Binding SelectedUser}"
+                SelectionMode="Single"
+                VerticalOptions="FillAndExpand">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Margin="10">
+                            <Frame
+                                Padding="0"
+                                BorderColor="#01E3D6"
+                                CornerRadius="40"
+                                HasShadow="True"
+                                HeightRequest="60"
+                                IsClippedToBounds="True"
+                                WidthRequest="60"
+                                HorizontalOptions="Center"
+                                VerticalOptions="CenterAndExpand">
+                                <Image Opacity=".8" Source="{Binding ImagePath}" />
+                            </Frame>
+                            <Label
+                                FontAttributes="Bold"
+                                Text="{Binding UserName}"
+                                TextColor="White"
+                                TranslationY="-10"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center" />
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <!--  選擇使用者 End  -->
             <Label
-                x:Name="lbStopWatch"
+                Grid.Row="2"
+                Margin="25,0,0,0"
+                FontAttributes="Bold"
+                FontSize="Medium"
+                HorizontalTextAlignment="Start"
+                Text="紀錄種類"
+                TextColor="White" />
+            <CollectionView
+                x:Name="cvTypes"
                 Grid.Row="3"
-                FontSize="60"
-                HorizontalTextAlignment="Center"
-                Text="{Binding Timer, StringFormat=\{0:mm\\:ss\}}"
-                VerticalTextAlignment="Center" />
-
-            <Button
-                x:Name="btnStart"
-                Grid.Row="4"
-                Margin="50,5"
-                BackgroundColor="#FF9F74"
-                Command="{Binding TimeStartCommand}"
-                CornerRadius="30"
-                FontSize="Medium" 
+                Margin="20,10,0,0"
                 HeightRequest="60"
-                IsVisible="{Binding IsStart}"
-                Text="Start"
-                TextColor="White"
-                WidthRequest="100">
-                <Button.Triggers>
+                HorizontalScrollBarVisibility="Never"
+                ItemsLayout="HorizontalList"
+                ItemsSource="{Binding LogTypes}"
+                VerticalOptions="FillAndExpand">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout>
+                            <Button
+                                Margin="10,0"
+                                BackgroundColor="#5B5151"
+                                CornerRadius="30"
+                                FontAttributes="Bold"
+                                Text="{Binding TypeName}"
+                                TextColor="White"
+                                WidthRequest="100" />
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <BoxView
+                Grid.Row="4"
+                BackgroundColor="#707070"
+                CornerRadius="40,40,0,0"
+                Opacity=".4"
+                HorizontalOptions="FillAndExpand" />
+            <BoxView
+                Grid.Row="4"
+                Margin="5,5,5,0"
+                BackgroundColor="#409BD1"
+                CornerRadius="40,40,0,0"
+                Opacity=".8"
+                HorizontalOptions="FillAndExpand" />
+            <Grid Grid.Row="4">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Label
+                    x:Name="lbStopWatch"
+                    Grid.Row="0"
+                    FontAttributes="Bold"
+                    FontSize="60"
+                    HorizontalTextAlignment="Center"
+                    Text="{Binding Timer, StringFormat=\{0:mm\\:ss\}}"
+                    TextColor="White"
+                    VerticalTextAlignment="Center" />
+                <Button
+                    x:Name="btnStart"
+                    Grid.Row="1"
+                    Margin="100,5"
+                    BackgroundColor="#01E3D6"
+                    Command="{Binding TimeStartCommand}"
+                    CornerRadius="30"
+                    FontAttributes="Bold"
+                    FontSize="Large"
+                    HeightRequest="50"
+                    IsVisible="{Binding IsStart}"
+                    Text="Start"
+                    TextColor="#707070"
+                    WidthRequest="75">
+                    <!--  檢查使用者是不是已經選擇了  -->
+                    <!--<Button.Triggers>
                     <DataTrigger
-                        Binding="{Binding Source={x:Reference pickerUserName}, Path=Text.Length}"
+                        Binding="{Binding Source={x:Reference cvUsers}, Path=Text.Length}"
                         TargetType="Button"
                         Value="0">
                         <Setter Property="IsEnabled" Value="False" />
                     </DataTrigger>
-                </Button.Triggers>
-            </Button>
-            <Button
-                x:Name="btnStop"
-                Grid.Row="4"
-                Margin="50,5"
-                BackgroundColor="#646464"
-                Command="{Binding TimeStopommand}"
-                CornerRadius="30"
-                FontSize="Medium"
-                HeightRequest="50"
-                IsVisible="{Binding IsStop}"
-                Text="Stop"
-                TextColor="White"
-                WidthRequest="100" />
-            <Label
-                Grid.Row="5"
-                Margin="30,20,0,0"
-                FontSize="Medium"
-                HorizontalTextAlignment="Start"
-                Text="歷次紀錄" />
-            <!--<SwipeView />-->
-            <ListView Grid.Row="6" ItemsSource="{Binding DivingLogs}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Grid Margin="30,0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Label
-                                    Grid.Column="0"
-                                    FontSize="Medium"
-                                    Text="{Binding ID}" />
-                                <Label
-                                    Grid.Column="1"
-                                    FontSize="Medium"
-                                    Text="{Binding name}" />
-                                <Label
-                                    Grid.Column="2"
-                                    FontSize="Medium"
-                                    HorizontalTextAlignment="Center"
-                                    Text="{Binding time, StringFormat=\{0:mm\\:ss\}}" />
-                            </Grid>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </Button.Triggers>-->
+                </Button>
+                <Button
+                    x:Name="btnStop"
+                    Grid.Row="2"
+                    Margin="100,5"
+                    BackgroundColor="#646464"
+                    Command="{Binding TimeStopommand}"
+                    CornerRadius="30"
+                    FontSize="Medium"
+                    HeightRequest="50"
+                    IsVisible="{Binding IsStop}"
+                    Text="Stop"
+                    TextColor="White"
+                    WidthRequest="75" />
+                <Label
+                    Grid.Row="3"
+                    Margin="30,10"
+                    FontAttributes="Bold"
+                    FontSize="Medium"
+                    HorizontalTextAlignment="Start"
+                    Text="歷次紀錄"
+                    TextColor="White" />
+                <!--<SwipeView />-->
+                <ListView Grid.Row="4" ItemsSource="{Binding DivingLogs}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid Margin="30,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Label
+                                        Grid.Column="0"
+                                        FontSize="Medium"
+                                        Text="{Binding ID}" />
+                                    <Label
+                                        Grid.Column="1"
+                                        FontSize="Medium"
+                                        Text="{Binding name}" />
+                                    <Label
+                                        Grid.Column="2"
+                                        FontSize="Medium"
+                                        HorizontalTextAlignment="Center"
+                                        Text="{Binding time, StringFormat=\{0:mm\\:ss\}}" />
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
         </Grid>
-    </Grid>
+
+    </AbsoluteLayout>
 </ContentPage>

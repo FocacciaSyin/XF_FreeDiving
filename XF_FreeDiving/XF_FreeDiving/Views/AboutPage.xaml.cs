@@ -17,8 +17,8 @@ namespace XF_FreeDiving.Views
         public AboutPage()
         {
             InitializeComponent();
-            pickerUserName.SelectedIndex = 0;
-
+            //BindingContext = new AboutViewModel();
+            //pickerUserName.SelectedIndex = 0;
         }
     }
 }
