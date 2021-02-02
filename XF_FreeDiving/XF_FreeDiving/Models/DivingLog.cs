@@ -1,7 +1,5 @@
 ﻿using SQLite;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace XF_FreeDiving.Models
 {
@@ -9,6 +7,7 @@ namespace XF_FreeDiving.Models
     {
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; }
+
         public string name { get; set; }
         public TimeSpan time { get; set; }
     }

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using XF_FreeDiving.ViewModels;
 
 namespace XF_FreeDiving.Views

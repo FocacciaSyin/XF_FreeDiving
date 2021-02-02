@@ -1,6 +1,4 @@
-﻿using System;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+﻿using Xamarin.Forms;
 using XF_FreeDiving.Data;
 using XF_FreeDiving.Services;
 using XF_FreeDiving.Views;
@@ -9,7 +7,8 @@ namespace XF_FreeDiving
 {
     public partial class App : Application
     {
-        static DivingLogDatabase database;
+        private static DivingLogDatabase database;
+
         public App()
         {
             InitializeComponent();

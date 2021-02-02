@@ -1,24 +1,21 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using XF_FreeDiving.Models;
-using System.Linq;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using Xamarin.Forms.Internals;
 
 namespace XF_FreeDiving.ViewModels
 {
     public class AboutViewModel : BaseViewModel
     {
+        private Stopwatch Stopwatch;
 
-        Stopwatch Stopwatch;
+        private LogType _selectedLogType;
 
-        LogType _selectedLogType;
         public LogType SelectedLogType
         {
             get
@@ -34,7 +31,7 @@ namespace XF_FreeDiving.ViewModels
             }
         }
 
-        User _selectedUser;
+        private User _selectedUser;
 
         public User SelectedUser
         {
@@ -51,9 +48,8 @@ namespace XF_FreeDiving.ViewModels
             }
         }
 
-
-
         #region 按鈕顯示隱藏
+
         private bool _isStart = true;
         private bool _isStop = false;
 
@@ -68,9 +64,11 @@ namespace XF_FreeDiving.ViewModels
             get { return _isStop; }
             set { SetProperty(ref _isStop, value); }
         }
-        #endregion
+
+        #endregion 按鈕顯示隱藏
 
         private List<LogType> _logTypes;
+
         public List<LogType> LogTypes
         {
             get { return _logTypes; }
@@ -78,6 +76,7 @@ namespace XF_FreeDiving.ViewModels
         }
 
         private List<User> _users;
+
         public List<User> Users
         {
             get { return _users; }
@@ -85,6 +84,7 @@ namespace XF_FreeDiving.ViewModels
         }
 
         private TimeSpan _timer;
+
         public TimeSpan Timer
         {
             get { return _timer; }
@@ -92,6 +92,7 @@ namespace XF_FreeDiving.ViewModels
         }
 
         private List<DivingLog> _divingLogs;
+
         public List<DivingLog> DivingLogs
         {
             get { return _divingLogs; }
@@ -174,7 +175,6 @@ namespace XF_FreeDiving.ViewModels
 
             IsStart = false;
             IsStop = true;
-
         }
 
         public ICommand OpenWebCommand { get; }

@@ -1,21 +1,11 @@
-﻿using System;
-using System.ComponentModel;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-
-using XF_FreeDiving.Models;
-using XF_FreeDiving.Views;
+﻿using Xamarin.Forms;
 using XF_FreeDiving.ViewModels;
 
 namespace XF_FreeDiving.Views
 {
     public partial class ItemsPage : ContentPage
     {
-        ItemsViewModel _viewModel;
+        private ItemsViewModel _viewModel;
 
         public ItemsPage()
         {

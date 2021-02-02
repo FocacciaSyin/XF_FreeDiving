@@ -1,12 +1,11 @@
 <!--
     此檔案包含 .NET Native 所使用的執行階段指示詞。這裡的預設值適用於大部分的開發人員。
     但您可以修改這些參數來修改 .NET Native 最佳化工具的行為。
-    
 
     執行階段指示詞請參閱 https://go.microsoft.com/fwlink/?LinkID=391919 上的文件。
 
     全面啟用 App1.MyClass 及其所有 Public/Private 成員的反射
-    <Type Name="App1.MyClass" Dynamic="Required All"/>
+    <Type Name="App1.MyClass" Dynamic="Required All" />
 
     允許在 System.Int32 上動態建立 AppClass<T> 的特定具現化
     <TypeInstantiation Name="App1.AppClass" Arguments="System.Int32" Activate="Required Public" />
@@ -22,10 +21,7 @@
       星號不是萬用字元。
     -->
     <Assembly Name="*Application*" Dynamic="Required All" />
-    
-    
+
     <!-- 請在這裡新增應用程式特定執行階段指示詞。 -->
-
-
   </Application>
 </Directives>

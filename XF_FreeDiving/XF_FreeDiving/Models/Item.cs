@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace XF_FreeDiving.Models
+﻿namespace XF_FreeDiving.Models
 {
     public class Item
     {

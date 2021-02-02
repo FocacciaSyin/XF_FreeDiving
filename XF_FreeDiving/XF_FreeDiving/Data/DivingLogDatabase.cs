@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using XF_FreeDiving.Models;
 
@@ -10,20 +9,20 @@ namespace XF_FreeDiving.Data
 {
     public class DivingLogDatabase
     {
-        static readonly Lazy<SQLiteAsyncConnection> lazyInitializer = new Lazy<SQLiteAsyncConnection>(() =>
-        {
-            return new SQLiteAsyncConnection(Constants.DatabasePath, Constants.Flags);
-        });
+        private static readonly Lazy<SQLiteAsyncConnection> lazyInitializer = new Lazy<SQLiteAsyncConnection>(() =>
+           {
+               return new SQLiteAsyncConnection(Constants.DatabasePath, Constants.Flags);
+           });
 
         static SQLiteAsyncConnection Database => lazyInitializer.Value;
-        static bool initialized = false;
+        private static bool initialized = false;
 
         public DivingLogDatabase()
         {
             InitializeAsync().SafeFireAndForget(false);
         }
 
-        async Task InitializeAsync()
+        private async Task InitializeAsync()
         {
             if (!initialized)
             {
@@ -34,7 +33,6 @@ namespace XF_FreeDiving.Data
                 initialized = true;
             }
         }
-
 
         public Task<List<DivingLog>> GetItemsAsync()
         {

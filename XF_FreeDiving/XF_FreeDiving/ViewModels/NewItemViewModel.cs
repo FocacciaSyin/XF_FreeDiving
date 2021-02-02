@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Input;
-using XF_FreeDiving.Models;
 using Xamarin.Forms;
+using XF_FreeDiving.Models;
 
 namespace XF_FreeDiving.ViewModels
 {

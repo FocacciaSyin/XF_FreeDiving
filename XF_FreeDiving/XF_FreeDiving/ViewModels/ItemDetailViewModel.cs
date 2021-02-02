@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Threading.Tasks;
-using XF_FreeDiving.Models;
 using Xamarin.Forms;
 
 namespace XF_FreeDiving.ViewModels

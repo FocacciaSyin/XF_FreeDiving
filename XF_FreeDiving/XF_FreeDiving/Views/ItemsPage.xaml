@@ -3,11 +3,10 @@
     x:Class="XF_FreeDiving.Views.ItemsPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:XF_FreeDiving.ViewModels"
     xmlns:model="clr-namespace:XF_FreeDiving.Models"
+    xmlns:local="clr-namespace:XF_FreeDiving.ViewModels"
     x:Name="BrowseItemsPage"
     Title="{Binding Title}">
-
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Command="{Binding AddItemCommand}" Text="Add" />
