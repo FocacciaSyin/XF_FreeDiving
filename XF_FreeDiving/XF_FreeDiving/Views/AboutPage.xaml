@@ -9,6 +9,10 @@
     Title="{Binding Title}"
     BackgroundColor="#3563AA">
 
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" />
+    </ContentPage.Padding>
+
     <ContentPage.BindingContext>
         <vm:AboutViewModel />
     </ContentPage.BindingContext>
@@ -138,7 +142,7 @@
                 CornerRadius="40,40,0,0"
                 Opacity=".8"
                 HorizontalOptions="FillAndExpand" />
-            <Grid Grid.Row="4">
+            <Grid Grid.Row="4" Margin="5,5,5,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -201,11 +205,14 @@
                     Text="歷次紀錄"
                     TextColor="White" />
                 <!--<SwipeView />-->
-                <ListView Grid.Row="4" ItemsSource="{Binding DivingLogs}">
+                <ListView
+                    Grid.Row="4"
+                    BackgroundColor="#409BD1"
+                    ItemsSource="{Binding DivingLogs}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Grid Margin="30,0">
+                                <Grid Margin="30,0" VerticalOptions="Center">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="*" />

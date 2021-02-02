@@ -15,7 +15,7 @@ namespace XF_FreeDiving
             InitializeComponent();
 
             DependencyService.Register<MockDataStore>();
-            MainPage = new AppShell();
+            MainPage = new AboutPage();
         }
 
         public static DivingLogDatabase Database
