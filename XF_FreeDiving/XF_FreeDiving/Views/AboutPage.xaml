@@ -3,6 +3,7 @@
     x:Class="XF_FreeDiving.Views.AboutPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:fas="clr-namespace:FontAwesome"
     xmlns:vm="clr-namespace:XF_FreeDiving.ViewModels"
     Title="{Binding Title}"
     BackgroundColor="#3563AA">
@@ -107,7 +108,7 @@
                 x:Name="cvTypes"
                 Grid.Row="3"
                 Margin="20,10,0,0"
-                HeightRequest="60"
+                HeightRequest="70"
                 HorizontalScrollBarVisibility="Never"
                 ItemsLayout="HorizontalList"
                 ItemsSource="{Binding LogTypes}"
@@ -118,11 +119,20 @@
                             <Button
                                 Margin="10,0"
                                 BackgroundColor="#5B5151"
-                                CornerRadius="30"
+                                CornerRadius="20"
                                 FontAttributes="Bold"
+                                HeightRequest="50"
                                 Text="{Binding TypeName}"
                                 TextColor="White"
-                                WidthRequest="100" />
+                                WidthRequest="100">
+                                <!--<Button.CornerRadius>
+                                    <OnPlatform x:TypeArguments="x:Int32">
+                                        <On Platform="iOS" Value="20" />
+                                        <On Platform="Android" Value="30" />
+                                        <On Platform="UWP" Value="15" />
+                                    </OnPlatform>
+                                </Button.CornerRadius>-->
+                            </Button>
                         </StackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
@@ -140,6 +150,7 @@
                 CornerRadius="40,40,0,0"
                 Opacity=".8"
                 HorizontalOptions="FillAndExpand" />
+
             <Grid Grid.Row="4" Margin="5,5,5,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -160,17 +171,16 @@
                 <Button
                     x:Name="btnStart"
                     Grid.Row="1"
-                    Margin="100,5"
+                    Margin="120,5"
                     BackgroundColor="#01E3D6"
                     Command="{Binding TimeStartCommand}"
-                    CornerRadius="30"
+                    CornerRadius="20"
                     FontAttributes="Bold"
                     FontSize="Large"
                     HeightRequest="50"
                     IsVisible="{Binding IsStart}"
                     Text="Start"
-                    TextColor="#707070"
-                    WidthRequest="75">
+                    TextColor="#707070">
                     <!--  檢查使用者是不是已經選擇了  -->
                     <!--<Button.Triggers>
                     <DataTrigger
@@ -184,16 +194,15 @@
                 <Button
                     x:Name="btnStop"
                     Grid.Row="2"
-                    Margin="100,5"
+                    Margin="120,5"
                     BackgroundColor="#646464"
-                    Command="{Binding TimeStopommand}"
+                    Command="{Binding TimeStopCommand}"
                     CornerRadius="30"
                     FontSize="Medium"
                     HeightRequest="50"
                     IsVisible="{Binding IsStop}"
                     Text="Stop"
-                    TextColor="White"
-                    WidthRequest="75" />
+                    TextColor="White" />
                 <Label
                     Grid.Row="3"
                     Margin="30,10"
@@ -204,17 +213,22 @@
                     TextColor="White" />
                 <!--<SwipeView />-->
                 <ListView
+                    x:Name="lvDivingLog"
                     Grid.Row="4"
                     BackgroundColor="#409BD1"
-                    ItemsSource="{Binding DivingLogs}">
+                    IsPullToRefreshEnabled="true"
+                    ItemSelected="lvDivingLog_ItemSelected"
+                    ItemsSource="{Binding DivingLogs}"
+                    RefreshControlColor="Red">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Grid Margin="30,0" VerticalOptions="Center">
+                                <Grid Margin="30,10" VerticalOptions="Center">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="50" />
                                     </Grid.ColumnDefinitions>
                                     <Label
                                         Grid.Column="0"
@@ -229,6 +243,21 @@
                                         FontSize="Medium"
                                         HorizontalTextAlignment="Center"
                                         Text="{Binding time, StringFormat=\{0:mm\\:ss\}}" />
+                                    <Label Grid.Column="3" VerticalOptions="Center">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span
+                                                    x:Name="deleteIcon"
+                                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                                    FontSize="30"
+                                                    Text="{Static fas:FontAwesomeIcons.TrashAlt}"
+                                                    TextColor="OrangeRed" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer CommandParameter="{Binding ID}" Tapped="TapGestureRecognizer_Tapped" />
+                                        </Label.GestureRecognizers>
+                                    </Label>
                                 </Grid>
                             </ViewCell>
                         </DataTemplate>

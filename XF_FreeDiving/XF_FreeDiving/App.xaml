@@ -8,6 +8,26 @@
     -->
     <Application.Resources>
         <ResourceDictionary>
+            <!--  FontAwesome Start  -->
+            <OnPlatform x:Key="FontAwesomeBrands" x:TypeArguments="x:String">
+                <On Platform="Android" Value="FontAwesome5Brands.otf#Brands" />
+                <!--<On Platform="iOS" Value="FontAwesome5Brands-Regular" />-->
+                <!--  UWP搞不懂 # 後面一定要加 Font Awesome 5 free  -->
+                <On Platform="UWP" Value="/Assets/FontAwesome5Brands.otf#Font Awesome 5 free" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="FontAwesomeSolid" x:TypeArguments="x:String">
+                <On Platform="Android" Value="FontAwesome5Solid.otf#Solid" />
+                <!--<On Platform="iOS" Value="FontAwesome5Free-Solid" />-->
+                <On Platform="UWP" Value="/Assets/FontAwesome5Solid.otf#Font Awesome 5 free" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="FontAwesomeRegular" x:TypeArguments="x:String">
+                <On Platform="Android" Value="FontAwesome5Regular.otf#Regular" />
+                <!--<On Platform="iOS" Value="FontAwesome5Free-Regular" />-->
+                <On Platform="UWP" Value="/Assets/FontAwesome5Regular.otf#Font Awesome 5 free" />
+            </OnPlatform>
+            <!--  FontAwesome End  -->
             <Color x:Key="Primary">#2196F3</Color>
             <Style TargetType="Button">
                 <Setter Property="TextColor" Value="White" />

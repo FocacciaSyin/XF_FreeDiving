@@ -14,6 +14,8 @@
 # 使用的套件
 
 1. sqlite-net-pcl
+   1. UWP 路徑會在 C:\Users\[YourUserName]\AppData\Local\Packages\
+      C:\Users\xxxxx\AppData\Local\Packages\fcdc2c73-f1fd-424c-9b98-9632fab5d334_75cr2b68sm664\LocalState\FreeDivingSQLite.db3
 2. Xamarin.Forms.PancakeView
 3. SkiaSharp (尚未使用)
 4. Resizetizer.NT (讀取圖片用)
@@ -36,7 +38,7 @@
     - [ ] 讓XamarinForms讀取使用者上傳的圖片
   - [x] 紀錄種類
   - [x] 計時
-  - [ ] 歷次紀錄
+  - [x] 歷次紀錄
 
 - [ ] 整理應用程式的Style為可以共用
 
@@ -51,9 +53,9 @@
 
 - [ ] 當選擇到非碼表的選項增加 上下的箭頭 可以微調時間(5s)
 
-- [ ] 使用SwipeView
+- [ ] 刪除功能
 
-  - [ ] 建立**歷史紀錄**滑動可以刪除其中一筆資料
+  - [ ] 使用SwipeView
 
   
 

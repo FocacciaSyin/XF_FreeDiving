@@ -31,7 +31,7 @@ namespace XF_FreeDiving.ViewModels
             }
         }
 
-        private User _selectedUser;
+        private User _selectedUser = null;
 
         public User SelectedUser
         {
@@ -135,50 +135,78 @@ namespace XF_FreeDiving.ViewModels
             //IsStop = false;
 
             TimeStartCommand = new Command(ExecuteStartTimer);
-            TimeStopommand = new Command(ExecuteStopTimer);
+            TimeStopCommand = new Command(ExecuteStopTimer);
+            DeleteCommand = new Command(ExecuteDelete);
+        }
+
+        private async void ExecuteDelete()
+        {
+            await Task.Run(async () =>
+             {
+                 //var itemDivingLog = await App.Database.GetItemAsync((int)id);
+                 //await App.Database.DeleteItemAsync(itemDivingLog);
+                 DivingLogs = await App.Database.GetItemsAsync();
+                 DivingLogs = DivingLogs.OrderByDescending(r => r.ID).ToList();
+             });
         }
 
         /// <summary>
         /// 觸發停止
         /// </summary>
-        private void ExecuteStopTimer()
+        private async void ExecuteStopTimer()
         {
             Stopwatch.Stop();
 
             IsStart = true;
             IsStop = false;
-            //執行 Insert
-            DivingLog itemDivingLog = new DivingLog();
-            itemDivingLog.ID = 0;
-            itemDivingLog.name = SelectedUser.UserName;
-            itemDivingLog.time = Timer;
-            //寫入資料到 Sqlite;
-            Task.Run(async () =>
+
+            if (SelectedUser != null)
             {
-                await App.Database.SaveItemAsync(itemDivingLog);
-                DivingLogs = await App.Database.GetItemsAsync();
-                DivingLogs = DivingLogs.OrderByDescending(r => r.ID).ToList();
-            });
+                //執行 Insert
+                DivingLog itemDivingLog = new DivingLog();
+                itemDivingLog.ID = 0;
+                itemDivingLog.name = SelectedUser.UserName;
+                itemDivingLog.time = Timer;
+                //寫入資料到 Sqlite;
+                await Task.Run(async () =>
+                 {
+                     await App.Database.SaveItemAsync(itemDivingLog);
+                     DivingLogs = await App.Database.GetItemsAsync();
+                     DivingLogs = DivingLogs.OrderByDescending(r => r.ID).ToList();
+                 });
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("注意", "請先選擇使用者", "OK");
+            }
         }
 
         /// <summary>
         /// 開始計時
         /// </summary>
-        private void ExecuteStartTimer()
+        private async void ExecuteStartTimer()
         {
-            Stopwatch.Restart();
-            Device.StartTimer(TimeSpan.FromMilliseconds(100), () =>
+            if (SelectedUser != null)
             {
-                Timer = Stopwatch.Elapsed;
-                return true;
-            });
+                Stopwatch.Restart();
+                Device.StartTimer(TimeSpan.FromMilliseconds(100), () =>
+                {
+                    Timer = Stopwatch.Elapsed;
+                    return true;
+                });
 
-            IsStart = false;
-            IsStop = true;
+                IsStart = false;
+                IsStop = true;
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("注意", "請先選擇使用者", "OK");
+            }
         }
 
         public ICommand OpenWebCommand { get; }
         public ICommand TimeStartCommand { get; set; }
-        public ICommand TimeStopommand { get; set; }
+        public ICommand TimeStopCommand { get; set; }
+        public ICommand DeleteCommand { get; set; }
     }
 }

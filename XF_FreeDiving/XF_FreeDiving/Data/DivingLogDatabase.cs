@@ -34,21 +34,30 @@ namespace XF_FreeDiving.Data
             }
         }
 
+        /// <summary>
+        /// 取得所有淺水的紀錄
+        /// </summary>
+        /// <returns></returns>
         public Task<List<DivingLog>> GetItemsAsync()
         {
             return Database.Table<DivingLog>().ToListAsync();
         }
 
-        public Task<List<DivingLog>> GetItemsNotDoneAsync()
-        {
-            return Database.QueryAsync<DivingLog>("SELECT * FROM [DivingLog] WHERE [Name] = 'David'");
-        }
-
+        /// <summary>
+        /// 透過Id取得資料
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Task<DivingLog> GetItemAsync(int id)
         {
             return Database.Table<DivingLog>().Where(i => i.ID == id).FirstOrDefaultAsync();
         }
 
+        /// <summary>
+        /// 儲存物件
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         public Task<int> SaveItemAsync(DivingLog item)
         {
             if (item.ID != 0)
@@ -61,6 +70,11 @@ namespace XF_FreeDiving.Data
             }
         }
 
+        /// <summary>
+        /// 刪除資料庫項目
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         public Task<int> DeleteItemAsync(DivingLog item)
         {
             return Database.DeleteAsync(item);
