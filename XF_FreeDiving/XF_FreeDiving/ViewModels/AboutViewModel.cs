@@ -136,18 +136,6 @@ namespace XF_FreeDiving.ViewModels
 
             TimeStartCommand = new Command(ExecuteStartTimer);
             TimeStopCommand = new Command(ExecuteStopTimer);
-            DeleteCommand = new Command(ExecuteDelete);
-        }
-
-        private async void ExecuteDelete()
-        {
-            await Task.Run(async () =>
-             {
-                 //var itemDivingLog = await App.Database.GetItemAsync((int)id);
-                 //await App.Database.DeleteItemAsync(itemDivingLog);
-                 DivingLogs = await App.Database.GetItemsAsync();
-                 DivingLogs = DivingLogs.OrderByDescending(r => r.ID).ToList();
-             });
         }
 
         /// <summary>
@@ -163,10 +151,14 @@ namespace XF_FreeDiving.ViewModels
             if (SelectedUser != null)
             {
                 //執行 Insert
-                DivingLog itemDivingLog = new DivingLog();
-                itemDivingLog.ID = 0;
-                itemDivingLog.name = SelectedUser.UserName;
-                itemDivingLog.time = Timer;
+                DivingLog itemDivingLog = new DivingLog()
+                {
+                    ID = 0,
+                    name = SelectedUser.UserName,
+                    time = Timer,
+                    createDate = DateTime.Now
+                };
+
                 //寫入資料到 Sqlite;
                 await Task.Run(async () =>
                  {
@@ -207,6 +199,33 @@ namespace XF_FreeDiving.ViewModels
         public ICommand OpenWebCommand { get; }
         public ICommand TimeStartCommand { get; set; }
         public ICommand TimeStopCommand { get; set; }
-        public ICommand DeleteCommand { get; set; }
+
+        private ICommand _deleteCommand;
+
+        public ICommand DeleteCommand
+        {
+            get
+            {
+                if (_deleteCommand == null)
+                {
+                    _deleteCommand = new Command<DivingLog>(async item =>
+                    {
+                        var result = await App.Current.MainPage.DisplayAlert("提示", $"是否確定刪除?({item.ID})", "OK", "Cancel");
+                        if (result)
+                        {
+                            var itemDivingLog = await App.Database.GetItemAsync(item.ID);
+                            if (itemDivingLog != null)
+                            {
+                                await App.Database.DeleteItemAsync(itemDivingLog);
+                            }
+
+                            DivingLogs = await App.Database.GetItemsAsync();
+                            DivingLogs = DivingLogs.OrderByDescending(r => r.ID).ToList();
+                        }
+                    });
+                }
+                return _deleteCommand;
+            }
+        }
     }
 }

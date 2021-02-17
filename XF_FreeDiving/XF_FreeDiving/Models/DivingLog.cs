@@ -9,6 +9,11 @@ namespace XF_FreeDiving.Models
         public int ID { get; set; }
 
         public string name { get; set; }
+
         public TimeSpan time { get; set; }
+
+        public DateTime createDate { get; set; }
+
+      
     }
 }
