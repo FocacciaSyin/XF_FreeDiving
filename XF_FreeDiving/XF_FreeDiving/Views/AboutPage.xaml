@@ -4,8 +4,10 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:fas="clr-namespace:FontAwesome"
+    xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
     xmlns:system="clr-namespace:System;assembly=netstandard"
     xmlns:vm="clr-namespace:XF_FreeDiving.ViewModels"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
     x:Name="AboutContentPage"
     Title="{Binding Title}"
     BackgroundColor="#3563AA">
@@ -160,7 +162,6 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Label
@@ -184,17 +185,7 @@
                     HeightRequest="50"
                     IsVisible="{Binding IsStart}"
                     Text="Start"
-                    TextColor="#707070">
-                    <!--  檢查使用者是不是已經選擇了  -->
-                    <!--<Button.Triggers>
-                    <DataTrigger
-                        Binding="{Binding Source={x:Reference cvUsers}, Path=Text.Length}"
-                        TargetType="Button"
-                        Value="0">
-                        <Setter Property="IsEnabled" Value="False" />
-                    </DataTrigger>
-                </Button.Triggers>-->
-                </Button>
+                    TextColor="#707070" />
                 <Button
                     x:Name="btnStop"
                     Grid.Row="2"
@@ -207,96 +198,106 @@
                     IsVisible="{Binding IsStop}"
                     Text="Stop"
                     TextColor="White" />
-                <Label
+
+                <xct:TabView
                     Grid.Row="3"
-                    Margin="30,10"
-                    FontAttributes="Bold"
-                    FontSize="Medium"
-                    HorizontalTextAlignment="Start"
-                    Text="歷次紀錄"
-                    TextColor="White" />
-                <!--<SwipeView />-->
-                <ListView
-                    x:Name="lvDivingLog"
-                    Grid.Row="4"
-                    BackgroundColor="#409BD1"
-                    ItemSelected="lvDivingLog_ItemSelected"
-                    ItemsSource="{Binding DivingLogs}"
-                    RefreshControlColor="Red"
-                    RowHeight="80"
-                    SelectionMode="None">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <Grid
-                                    x:Name="gLayout"
-                                    Margin="30,10"
-                                    VerticalOptions="Center">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="30" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="50" />
-                                    </Grid.ColumnDefinitions>
-                                    <Frame
-                                        Grid.Column="0"
-                                        Padding="0"
-                                        Background="red"
-                                        CornerRadius="10"
-                                        HasShadow="False"
-                                        Opacity="0.4"
-                                        VerticalOptions="Center">
-                                        <Label
-                                            FontSize="Medium"
-                                            Text="{Binding ID}"
-                                            TextColor="White"
-                                            HorizontalOptions="Center" />
-                                    </Frame>
-                                    <Label
-                                        Grid.Column="1"
-                                        FontSize="Medium"
-                                        Text="{Binding name}"
-                                        HorizontalOptions="Center"
-                                        VerticalOptions="Center" />
-                                    <Label
-                                        Grid.Column="2"
-                                        FontSize="Medium"
-                                        HorizontalOptions="End"
-                                        VerticalOptions="Center">
-                                        <Label.FormattedText>
-                                            <FormattedString>
-                                                <Span Text="{Binding createDate, StringFormat='{0:yyyy/MM/dd}'}" />
-                                                <Span Text="{x:Static system:Environment.NewLine}" />
-                                                <Span Text="{Binding time, StringFormat=\{0:mm\\:ss\}}" />
-                                            </FormattedString>
-                                        </Label.FormattedText>
-                                    </Label>
-                                    <Label
-                                        Grid.Column="3"
-                                        HorizontalOptions="End"
-                                        VerticalOptions="Center">
-                                        <Label.FormattedText>
-                                            <FormattedString>
-                                                <Span
-                                                    x:Name="deleteIcon"
-                                                    FontFamily="{StaticResource FontAwesomeSolid}"
-                                                    FontSize="25"
-                                                    Text="{Static fas:FontAwesomeIcons.TrashAlt}"
-                                                    TextColor="#B0384C" />
-                                            </FormattedString>
-                                        </Label.FormattedText>
-                                        <Label.GestureRecognizers>
-                                            <TapGestureRecognizer
-                                                BindingContext="{Binding Source={x:Reference lvDivingLog}, Path=BindingContext}"
-                                                Command="{Binding DeleteCommand}"
-                                                CommandParameter="{Binding Source={x:Reference gLayout}, Path=BindingContext}" />
-                                        </Label.GestureRecognizers>
-                                    </Label>
-                                </Grid>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                    HeightRequest="2000"
+                    VerticalOptions="FillAndExpand">
+                    <xct:TabViewItem
+                        FontAttributes="Bold"
+                        Text="歷次紀錄"
+                        TextColor="White"
+                        TextColorSelected="Orange">
+                        <ListView
+                            x:Name="lvDivingLog"
+                            BackgroundColor="#409BD1"
+                            ItemSelected="lvDivingLog_ItemSelected"
+                            ItemsSource="{Binding DivingLogs}"
+                            RefreshControlColor="Red"
+                            RowHeight="80"
+                            SelectionMode="None"
+                            VerticalOptions="FillAndExpand">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <Grid
+                                            x:Name="gLayout"
+                                            Margin="30,10"
+                                            VerticalOptions="Center">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="30" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="50" />
+                                            </Grid.ColumnDefinitions>
+                                            <Frame
+                                                Grid.Column="0"
+                                                Padding="0"
+                                                Background="red"
+                                                CornerRadius="10"
+                                                HasShadow="False"
+                                                Opacity="0.4"
+                                                VerticalOptions="Center">
+                                                <Label
+                                                    FontSize="Medium"
+                                                    Text="{Binding ID}"
+                                                    TextColor="White"
+                                                    HorizontalOptions="Center" />
+                                            </Frame>
+                                            <Label
+                                                Grid.Column="1"
+                                                FontSize="Medium"
+                                                Text="{Binding name}"
+                                                HorizontalOptions="Center"
+                                                VerticalOptions="Center" />
+                                            <Label
+                                                Grid.Column="2"
+                                                FontSize="Medium"
+                                                HorizontalOptions="End"
+                                                VerticalOptions="Center">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding createDate, StringFormat='{0:yyyy/MM/dd}'}" />
+                                                        <Span Text="{x:Static system:Environment.NewLine}" />
+                                                        <Span Text="{Binding time, StringFormat=\{0:mm\\:ss\}}" />
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                            <Label
+                                                Grid.Column="3"
+                                                HorizontalOptions="End"
+                                                VerticalOptions="Center">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span
+                                                            x:Name="deleteIcon"
+                                                            FontFamily="{StaticResource FontAwesomeSolid}"
+                                                            FontSize="25"
+                                                            Text="{Static fas:FontAwesomeIcons.TrashAlt}"
+                                                            TextColor="#B0384C" />
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                                <Label.GestureRecognizers>
+                                                    <TapGestureRecognizer
+                                                        BindingContext="{Binding Source={x:Reference lvDivingLog}, Path=BindingContext}"
+                                                        Command="{Binding DeleteCommand}"
+                                                        CommandParameter="{Binding Source={x:Reference gLayout}, Path=BindingContext}" />
+                                                </Label.GestureRecognizers>
+                                            </Label>
+                                        </Grid>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </xct:TabViewItem>
+                    <xct:TabViewItem
+                        FontAttributes="Bold"
+                        Text="圖表"
+                        TextColor="White"
+                        TextColorSelected="Orange">
+                        <microcharts:ChartView x:Name="chartView" />
+                    </xct:TabViewItem>
+                </xct:TabView>
             </Grid>
         </Grid>
     </AbsoluteLayout>

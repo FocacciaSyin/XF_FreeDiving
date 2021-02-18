@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 using XF_FreeDiving.Models;
 
@@ -99,6 +99,8 @@ namespace XF_FreeDiving.ViewModels
             set { SetProperty(ref _divingLogs, value); }
         }
 
+        public ObservableCollection<Model> Data { get; set; }
+
         public AboutViewModel()
         {
             _stopwatch = new Stopwatch();
@@ -122,6 +124,13 @@ namespace XF_FreeDiving.ViewModels
                 new LogType(){ ID=2, Mode = Models.LogType.紀錄種類.目標計時 , TypeName="2:00" },
                 new LogType(){ ID=3, Mode = Models.LogType.紀錄種類.目標計時 , TypeName="2:30" },
             };
+
+            Data = new ObservableCollection<Model>() {
+                new Model("Jan", 50),
+                new Model("Feb", 70),
+                new Model("Mar", 65),
+                new Model("Apr", 57),
+                new Model("May", 48) };
 
             TimeStartCommand = new Command(ExecuteStartTimer);
             TimeStopCommand = new Command(ExecuteStopTimer);
@@ -226,4 +235,21 @@ namespace XF_FreeDiving.ViewModels
             }
         }
     }
+
+    #region Chart
+
+    public class Model
+    {
+        public string Month { get; set; }
+
+        public double Target { get; set; }
+
+        public Model(string xValue, double yValue)
+        {
+            Month = xValue;
+            Target = yValue;
+        }
+    }
+
+    #endregion Chart
 }
