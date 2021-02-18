@@ -12,7 +12,7 @@ namespace XF_FreeDiving.ViewModels
 {
     public class AboutViewModel : BaseViewModel
     {
-        private Stopwatch Stopwatch;
+        private Stopwatch _stopwatch;
 
         private LogType _selectedLogType;
 
@@ -101,9 +101,8 @@ namespace XF_FreeDiving.ViewModels
 
         public AboutViewModel()
         {
-            Stopwatch = new Stopwatch();
+            _stopwatch = new Stopwatch();
             Title = "計時";
-            OpenWebCommand = new Command(async () => await Browser.OpenAsync("https://aka.ms/xamain-quickstart"));
 
             Task.Run(async () =>
             {
@@ -124,16 +123,6 @@ namespace XF_FreeDiving.ViewModels
                 new LogType(){ ID=3, Mode = Models.LogType.紀錄種類.目標計時 , TypeName="2:30" },
             };
 
-            //DivingLogs = new ObservableCollection<DivingLog>()
-            //{
-            //    new DivingLog(){ ID=1, name="DAVID", time = new TimeSpan(0, 2, 30)},
-            //    new DivingLog(){ ID=2, name="DAVID", time = new TimeSpan(0, 2, 10)},
-            //    new DivingLog(){ ID=3, name="DAVID", time = new TimeSpan(0, 1, 30)},
-            //    new DivingLog(){ ID=4, name="BENBEN", time = new TimeSpan(0, 2, 10)}
-            //};
-            //IsStart = true;
-            //IsStop = false;
-
             TimeStartCommand = new Command(ExecuteStartTimer);
             TimeStopCommand = new Command(ExecuteStopTimer);
         }
@@ -143,7 +132,7 @@ namespace XF_FreeDiving.ViewModels
         /// </summary>
         private async void ExecuteStopTimer()
         {
-            Stopwatch.Stop();
+            _stopwatch.Stop();
 
             IsStart = true;
             IsStop = false;
@@ -180,10 +169,10 @@ namespace XF_FreeDiving.ViewModels
         {
             if (SelectedUser != null)
             {
-                Stopwatch.Restart();
+                _stopwatch.Restart();
                 Device.StartTimer(TimeSpan.FromMilliseconds(100), () =>
                 {
-                    Timer = Stopwatch.Elapsed;
+                    Timer = _stopwatch.Elapsed;
                     return true;
                 });
 
@@ -196,12 +185,21 @@ namespace XF_FreeDiving.ViewModels
             }
         }
 
-        public ICommand OpenWebCommand { get; }
+        /// <summary>
+        /// 觸發開始按鈕
+        /// </summary>
         public ICommand TimeStartCommand { get; set; }
+
+        /// <summary>
+        /// 觸發停止按鈕
+        /// </summary>
         public ICommand TimeStopCommand { get; set; }
 
         private ICommand _deleteCommand;
 
+        /// <summary>
+        /// 刪除按鈕
+        /// </summary>
         public ICommand DeleteCommand
         {
             get

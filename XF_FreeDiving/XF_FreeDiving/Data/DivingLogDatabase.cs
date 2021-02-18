@@ -7,21 +7,32 @@ using XF_FreeDiving.Models;
 
 namespace XF_FreeDiving.Data
 {
+    /// <summary>
+    /// 處理清單對SQLite的動作
+    /// </summary>
     public class DivingLogDatabase
     {
         private static readonly Lazy<SQLiteAsyncConnection> lazyInitializer = new Lazy<SQLiteAsyncConnection>(() =>
-           {
-               return new SQLiteAsyncConnection(Constants.DatabasePath, Constants.Flags);
-           });
+        {
+            return new SQLiteAsyncConnection(Constants.DatabasePath, Constants.Flags);
+        });
 
         static SQLiteAsyncConnection Database => lazyInitializer.Value;
+
         private static bool initialized = false;
 
+        /// <summary>
+        /// 建構式
+        /// </summary>
         public DivingLogDatabase()
         {
             InitializeAsync().SafeFireAndForget(false);
         }
 
+        /// <summary>
+        ///初始化SQLite
+        /// </summary>
+        /// <returns></returns>
         private async Task InitializeAsync()
         {
             if (!initialized)

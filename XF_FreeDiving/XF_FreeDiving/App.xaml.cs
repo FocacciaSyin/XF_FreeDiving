@@ -17,6 +17,9 @@ namespace XF_FreeDiving
             MainPage = new AboutPage();
         }
 
+        /// <summary>
+        /// SQLite設定
+        /// </summary>
         public static DivingLogDatabase Database
         {
             get
