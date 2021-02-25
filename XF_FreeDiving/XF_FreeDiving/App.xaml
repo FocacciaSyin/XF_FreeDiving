@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Application
+<dryIoc:PrismApplication
     x:Class="XF_FreeDiving.App"
     xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:dryIoc="http://prismlibrary.com">
     <!--
         Define global resources and styles here, that apply to all pages in your app.
     -->
@@ -54,4 +55,4 @@
             </Style>
         </ResourceDictionary>
     </Application.Resources>
-</Application>
+</dryIoc:PrismApplication>

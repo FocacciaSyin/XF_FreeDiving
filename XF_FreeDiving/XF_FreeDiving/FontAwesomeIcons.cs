@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FontAwesome
+﻿namespace XF_FreeDiving
 {
     public class FontAwesomeIcons
     {
@@ -5373,11 +5367,11 @@ namespace FontAwesome
         public const string Dashcube = "\uf210";
 
         /// <summary>
-        /// fa-database unicode value ("\uf1c0").
+        /// fa-_sqLite unicode value ("\uf1c0").
         /// <para/>
         /// This icon supports the following styles: Light (Pro), Regular (Pro), Solid, Duotone (Pro)
         /// <para/>
-        /// See https://fontawesome.com/icons/database
+        /// See https://fontawesome.com/icons/_sqLite
         /// </summary>
         public const string Database = "\uf1c0";
 

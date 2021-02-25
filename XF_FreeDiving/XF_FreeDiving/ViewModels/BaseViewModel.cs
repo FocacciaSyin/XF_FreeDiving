@@ -5,15 +5,10 @@ using System.Runtime.CompilerServices;
 
 using Xamarin.Forms;
 
-using XF_FreeDiving.Models;
-using XF_FreeDiving.Services;
-
 namespace XF_FreeDiving.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
-
         private bool isBusy = false;
 
         public bool IsBusy

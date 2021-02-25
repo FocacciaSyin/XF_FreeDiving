@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="XF_FreeDiving.Views.Controls.Types"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Label
+            Grid.Row="0"
+            Margin="25,0,0,0"
+            FontAttributes="Bold"
+            FontSize="Medium"
+            HorizontalTextAlignment="Start"
+            Text="紀錄種類"
+            TextColor="White" />
+        <CollectionView
+            x:Name="cvTypes"
+            Grid.Row="1"
+            Margin="20,10,0,0"
+            HeightRequest="70"
+            HorizontalScrollBarVisibility="Never"
+            ItemsLayout="HorizontalList"
+            ItemsSource="{Binding LogTypes}"
+            VerticalOptions="FillAndExpand">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout>
+                        <Button
+                            Margin="10,0"
+                            BackgroundColor="#5B5151"
+                            CornerRadius="20"
+                            FontAttributes="Bold"
+                            HeightRequest="50"
+                            Text="{Binding TypeName}"
+                            TextColor="White"
+                            WidthRequest="100" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentView>

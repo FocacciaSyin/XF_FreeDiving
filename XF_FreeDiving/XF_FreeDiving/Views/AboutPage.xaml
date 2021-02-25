@@ -3,10 +3,11 @@
     x:Class="XF_FreeDiving.Views.AboutPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:fas="clr-namespace:FontAwesome"
+    xmlns:controls="clr-namespace:XF_FreeDiving.Views.Controls;assembly=XF_FreeDiving"
+    xmlns:fas="clr-namespace:XF_FreeDiving"
     xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
+    xmlns:prism="http://prismlibrary.com"
     xmlns:system="clr-namespace:System;assembly=netstandard"
-    xmlns:vm="clr-namespace:XF_FreeDiving.ViewModels"
     xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
     x:Name="AboutContentPage"
     Title="{Binding Title}"
@@ -15,10 +16,6 @@
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" />
     </ContentPage.Padding>
-
-    <ContentPage.BindingContext>
-        <vm:AboutViewModel />
-    </ContentPage.BindingContext>
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -49,115 +46,31 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <!--  選擇使用者 Start  -->
-            <Label
-                Grid.Row="0"
-                Margin="25,10,0,0"
-                FontAttributes="Bold"
-                FontSize="Medium"
-                HorizontalTextAlignment="Start"
-                Text="使用者"
-                TextColor="White" />
-            <CollectionView
-                x:Name="cvUsers"
-                Grid.Row="1"
-                Margin="40,10,0,30"
-                HeightRequest="100"
-                HorizontalScrollBarVisibility="Never"
-                ItemsLayout="HorizontalList"
-                ItemsSource="{Binding Users}"
-                SelectedItem="{Binding SelectedUser}"
-                SelectionMode="Single"
-                VerticalOptions="FillAndExpand">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <StackLayout Margin="10">
-                            <Frame
-                                Padding="0"
-                                BorderColor="#01E3D6"
-                                CornerRadius="40"
-                                HasShadow="True"
-                                HeightRequest="60"
-                                IsClippedToBounds="True"
-                                WidthRequest="60"
-                                HorizontalOptions="Center"
-                                VerticalOptions="CenterAndExpand">
-                                <Image Opacity=".8" Source="{Binding ImagePath}" />
-                            </Frame>
-                            <Label
-                                FontAttributes="Bold"
-                                Text="{Binding UserName}"
-                                TextColor="White"
-                                TranslationY="-10"
-                                HorizontalOptions="Center"
-                                VerticalOptions="Center" />
-                        </StackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-            <!--  選擇使用者 End  -->
-            <Label
-                Grid.Row="2"
-                Margin="25,0,0,0"
-                FontAttributes="Bold"
-                FontSize="Medium"
-                HorizontalTextAlignment="Start"
-                IsVisible="false"
-                Text="紀錄種類"
-                TextColor="White" />
-            <CollectionView
-                x:Name="cvTypes"
-                Grid.Row="3"
-                Margin="20,10,0,0"
-                HeightRequest="70"
-                HorizontalScrollBarVisibility="Never"
-                IsVisible="false"
-                ItemsLayout="HorizontalList"
-                ItemsSource="{Binding LogTypes}"
-                VerticalOptions="FillAndExpand">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <StackLayout>
-                            <Button
-                                Margin="10,0"
-                                BackgroundColor="#5B5151"
-                                CornerRadius="20"
-                                FontAttributes="Bold"
-                                HeightRequest="50"
-                                Text="{Binding TypeName}"
-                                TextColor="White"
-                                WidthRequest="100">
-                                <!--<Button.CornerRadius>
-                                    <OnPlatform x:TypeArguments="x:Int32">
-                                        <On Platform="iOS" Value="20" />
-                                        <On Platform="Android" Value="30" />
-                                        <On Platform="UWP" Value="15" />
-                                    </OnPlatform>
-                                </Button.CornerRadius>-->
-                            </Button>
-                        </StackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+
+            <!--  選擇 使用者  -->
+            <controls:Users Grid.Row="0" />
+            <!--  選擇 計數種類  -->
+
+            <controls:Types Grid.Row="1" IsVisible="false" />
+
             <BoxView
-                Grid.Row="4"
+                Grid.Row="2"
                 BackgroundColor="#707070"
                 CornerRadius="40,40,0,0"
-                Opacity=".4"
-                HorizontalOptions="FillAndExpand" />
+                HorizontalOptions="FillAndExpand"
+                Opacity=".4" />
+
             <BoxView
-                Grid.Row="4"
+                Grid.Row="2"
                 Margin="5,5,5,0"
                 BackgroundColor="#409BD1"
                 CornerRadius="40,40,0,0"
-                Opacity=".8"
-                HorizontalOptions="FillAndExpand" />
+                HorizontalOptions="FillAndExpand"
+                Opacity=".8" />
 
-            <Grid Grid.Row="4" Margin="5,5,5,0">
+            <Grid Grid.Row="2" Margin="5,5,5,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -211,7 +124,6 @@
                         <ListView
                             x:Name="lvDivingLog"
                             BackgroundColor="#409BD1"
-                            ItemSelected="lvDivingLog_ItemSelected"
                             ItemsSource="{Binding DivingLogs}"
                             RefreshControlColor="Red"
                             RowHeight="80"
@@ -236,19 +148,20 @@
                                                 Background="red"
                                                 CornerRadius="10"
                                                 HasShadow="False"
+                                                IsVisible="false"
                                                 Opacity="0.4"
                                                 VerticalOptions="Center">
                                                 <Label
                                                     FontSize="Medium"
+                                                    HorizontalOptions="Center"
                                                     Text="{Binding ID}"
-                                                    TextColor="White"
-                                                    HorizontalOptions="Center" />
+                                                    TextColor="White" />
                                             </Frame>
                                             <Label
                                                 Grid.Column="1"
                                                 FontSize="Medium"
-                                                Text="{Binding name}"
                                                 HorizontalOptions="Center"
+                                                Text="{Binding name}"
                                                 VerticalOptions="Center" />
                                             <Label
                                                 Grid.Column="2"

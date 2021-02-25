@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="XF_FreeDiving.Views.Controls.Users"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Label
+            Grid.Row="0"
+            Margin="25,10,0,0"
+            FontAttributes="Bold"
+            FontSize="Medium"
+            HorizontalTextAlignment="Start"
+            Text="使用者"
+            TextColor="White" />
+
+        <CollectionView
+            x:Name="cvUsers"
+            Grid.Row="1"
+            Margin="40,10,0,30"
+            HeightRequest="100"
+            HorizontalScrollBarVisibility="Never"
+            ItemsLayout="HorizontalList"
+            ItemsSource="{Binding Users}"
+            SelectedItem="{Binding SelectedUser}"
+            SelectionMode="Single"
+            VerticalOptions="FillAndExpand">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Margin="10">
+                        <Frame
+                            Padding="0"
+                            BorderColor="#01E3D6"
+                            CornerRadius="40"
+                            HasShadow="True"
+                            HeightRequest="60"
+                            HorizontalOptions="Center"
+                            IsClippedToBounds="True"
+                            VerticalOptions="CenterAndExpand"
+                            WidthRequest="60">
+                            <Image Opacity=".8" Source="{Binding ImagePath}" />
+                        </Frame>
+                        <Label
+                            FontAttributes="Bold"
+                            HorizontalOptions="Center"
+                            Text="{Binding UserName}"
+                            TextColor="White"
+                            TranslationY="-10"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentView>
