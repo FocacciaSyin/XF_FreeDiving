@@ -55,7 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microcharts.Forms">
-      <Version>0.9.5.9</Version>
+      <Version>1.0.0-preview1</Version>
     </PackageReference>
     <PackageReference Include="Prism.DryIoc.Forms">
       <Version>8.0.0.1909</Version>
@@ -129,6 +129,15 @@
       <Project>{7CBC640A-E939-43EB-9377-CADAE8A17A03}</Project>
       <Name>XF_FreeDiving</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Man.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Whale.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Woman.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>

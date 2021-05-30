@@ -16,7 +16,7 @@ using XF_FreeDiving.Views.Controls;
 
 namespace XF_FreeDiving
 {
-    public partial class App 
+    public partial class App
     {
         public App()
         {

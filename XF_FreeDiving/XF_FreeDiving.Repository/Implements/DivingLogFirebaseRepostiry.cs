@@ -31,7 +31,6 @@ namespace XF_FreeDiving.Repository.Implements
         /// </summary>
         /// <param name="item">The item.</param>
         /// <returns></returns>
-        /// <exception cref="System.NotImplementedException"></exception>
         public async Task<bool> InsertAsync(DivingLog item)
         {
             try
@@ -127,9 +126,11 @@ namespace XF_FreeDiving.Repository.Implements
         {
             return (await _firebase.GetFirebaseClient()
                 .Child("DivingLog")
-                .OnceAsync<DivingLog>()).Select(item => new DivingLog
+                .OnceAsync<DivingLog>())
+                .Select((item, i) => new DivingLog
                 {
                     ID = item.Object.ID,
+                    sort = i + 1,
                     name = item.Object.name,
                     time = item.Object.time,
                     createDate = item.Object.createDate

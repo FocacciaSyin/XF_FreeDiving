@@ -1,9 +1,5 @@
-﻿using Prism.Navigation;
-using Prism.Regions;
-using Prism.Regions.Navigation;
-using System;
+﻿using Microcharts;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,38 +9,37 @@ using XF_FreeDiving.Service.Interfaces;
 
 namespace XF_FreeDiving.ViewModels.About
 {
-    public partial class AboutViewModel : BaseViewModel, IInitialize
+    public partial class AboutViewModel : BaseViewModel
     {
         private readonly Stopwatch _stopwatch;
 
         private List<DivingLog> _divingLogs;
 
-        private IDivingLogService _divingLogService;
+        private readonly IDivingLogService _divingLogService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AboutViewModel"/> class.
         /// </summary>
         /// <param name="divingLogService">The diving log service.</param>
-        public AboutViewModel(IDivingLogService divingLogService, IRegionManager regionManager)
+        public AboutViewModel(IDivingLogService divingLogService)
         {
             Title = "計時";
 
             this._divingLogService = divingLogService;
-            this._regionManager = regionManager;
             this._stopwatch = new Stopwatch();
 
+            //取得所有歷史資料
             Task.Run(async () =>
             {
-                DivingLogs = await _divingLogService.GetAllAsync();
-                DivingLogs = DivingLogs.OrderByDescending(r => r.createDate).ToList();
+                _divingLogs = await _divingLogService.GetAllAsync();
+                _divingLogs = _divingLogs.OrderByDescending(r => r.createDate).ToList();
             });
 
-            Data = new ObservableCollection<Model>() {
-                new Model("Jan", 50),
-                new Model("Feb", 70),
-                new Model("Mar", 65),
-                new Model("Apr", 57),
-                new Model("May", 48) };
+            //取得所有人歷史資料，並轉換成圖表格式
+            Task.Run(async () =>
+            {
+                _chartData = await _divingLogService.GetChartData();
+            });
 
             LogTypes = new List<LogType>()
             {
@@ -55,8 +50,8 @@ namespace XF_FreeDiving.ViewModels.About
 
             Users = new List<User>()
             {
-                new User(){ ID=1,UserName="Woody", ImagePath="Image/Man.png"},
-                new User(){ ID=2,UserName="BenBen", ImagePath="Image/Woman.png"}
+                new User(){ ID=1,UserName="Woody", ImagePath="Man.png"},
+                new User(){ ID=2,UserName="BenBen", ImagePath="Woman.png"}
             };
 
             TimeStartCommand = new Command(ExecuteStartTimer);
@@ -72,36 +67,18 @@ namespace XF_FreeDiving.ViewModels.About
             set { SetProperty(ref _divingLogs, value); }
         }
 
-        public ObservableCollection<Model> Data { get; set; }
-
-        #region Prism-Region 相關
+        private LineChart _chartData;
 
         /// <summary>
-        /// Prism-Regions
+        /// 取得圖表資料
         /// </summary>
-        /// <value>The region manager.</value>
-        private IRegionManager _regionManager { get; }
-
-        /// <summary>
-        /// Prism-Regions Init
-        /// </summary>
-        /// <param name="parameters">The parameters.</param>
-        /// <exception cref="NotImplementedException"></exception>
-        public void Initialize(INavigationParameters parameters)
+        /// <value>
+        /// The chart data.
+        /// </value>
+        public LineChart ChartData
         {
-            //_regionManager.RequestNavigate("UserRegion", "Users", RegionNavigationCallback);
-            //_regionManager.RequestNavigate("TypeRegion", "Types", RegionNavigationCallback);
+            get { return _chartData; }
+            set { SetProperty(ref _chartData, value); }
         }
-
-        /// <summary>
-        /// Prism-Regions 相關
-        /// </summary>
-        /// <param name="result"></param>
-        private void RegionNavigationCallback(IRegionNavigationResult result)
-        {
-            // Handle any errors or anything else you need to here...
-        }
-
-        #endregion Prism-Region 相關
     }
 }

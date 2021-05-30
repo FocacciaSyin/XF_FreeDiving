@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microcharts;
 using XF_FreeDiving.Repository.Entities;
 
 namespace XF_FreeDiving.Service.Interfaces
@@ -37,11 +38,15 @@ namespace XF_FreeDiving.Service.Interfaces
         /// <returns></returns>
         Task<DivingLog> GetByIdAsync(Guid id);
 
-
         /// <summary>
         /// 取得所有資料
         /// </summary>
         /// <returns></returns>
         Task<List<DivingLog>> GetAllAsync();
+
+        /// <summary>
+        /// 取得圖表資訊
+        /// </summary>
+        Task<LineChart> GetChartData();
     }
 }

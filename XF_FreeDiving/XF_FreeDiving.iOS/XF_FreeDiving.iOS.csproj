@@ -46,7 +46,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <MtouchArch>ARMv7, ARMv7s, ARM64</MtouchArch>
-    <CodesignKey>Apple Development: YU-SIN CHIU (88HM8ZYW4V)</CodesignKey>
+    <CodesignKey>Apple Development: YU-SIN CHIU %2888HM8ZYW4V%29</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchLink>None</MtouchLink>
@@ -137,7 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microcharts.Forms">
-      <Version>0.9.5.9</Version>
+      <Version>1.0.0-preview1</Version>
     </PackageReference>
     <PackageReference Include="Prism.DryIoc.Forms">
       <Version>8.0.0.1909</Version>
