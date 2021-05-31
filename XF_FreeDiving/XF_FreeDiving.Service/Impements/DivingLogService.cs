@@ -92,51 +92,51 @@ namespace XF_FreeDiving.Service.Impements
 
             var divingLogs = await _divingLogRepository.GetAllAsync();
 
-            //取出有多少使用者
-            var users = divingLogs.Select(x => x.name).Distinct();
+            //填值
+            var chartSeries = new List<ChartSerie>();
 
-            foreach (var user in users)
+            var userDivingLogs = divingLogs.FindAll(x => x.name == "Woody");
+
+            var chartEntries = new List<ChartEntry>();
+
+            for (int i = 0; i < userDivingLogs.Count; i++)
             {
-                divingLogs.FindAll(x => x.name == user).ForEach(item =>
-                    {
-                    });
+                chartEntries.Add(new ChartEntry((int)userDivingLogs[i].time.TotalSeconds)
+                {
+                    ValueLabel = ((int)userDivingLogs[i].time.TotalSeconds).ToString(),
+                    Label = i.ToString(),
+                });
             }
+
+            chartSeries.Add(new ChartSerie()
+            {
+                Name = "Woody",
+                Color = SKColor.Parse("#2c3e50"),
+                Entries = chartEntries,
+            });
 
             //分開存到 ChartEntry 中
 
             var lineChartData = new LineChart()
             {
+                Entries = chartEntries,
+                LabelTextSize = 42,
                 LabelOrientation = Orientation.Horizontal,
                 ValueLabelOrientation = Orientation.Horizontal,
-                LabelTextSize = 42,
-                ValueLabelTextSize = 18,
-                SerieLabelTextSize = 42,
-                LineAreaAlpha = 0,
-                ShowYAxisLines = true,
-                ShowYAxisText = true,
-                YAxisPosition = Position.Left,
                 BackgroundColor = SKColor.Parse("#409BD1"),
-                Series = new List<ChartSerie>()
-                {
-                    new ChartSerie()
-                    {
-                        Name = "UWP",
-                        Color = SKColor.Parse("#2c3e50"),
-                        Entries = GenerateSeriesEntry(r, 5),
-                    },
-                    new ChartSerie()
-                    {
-                        Name = "Android",
-                        Color = SKColor.Parse("#77d065"),
-                        Entries = GenerateSeriesEntry(r, 5),
-                    },
-                    new ChartSerie()
-                    {
-                        Name = "iOS",
-                        Color = SKColor.Parse("#b455b6"),
-                        Entries = GenerateSeriesEntry(r, 5),
-                    },
-                }
+                Margin = 40
+
+                //LabelOrientation = Orientation.Horizontal,
+                //ValueLabelOrientation = Orientation.Horizontal,
+                //LabelTextSize = 42,
+                //ValueLabelTextSize = 30,
+                //SerieLabelTextSize = 50,
+                //LineAreaAlpha = 10,
+                //ShowYAxisLines = true,
+                //ShowYAxisText = true,
+                //YAxisPosition = Position.Left,
+                //BackgroundColor = SKColor.Parse("#409BD1"),
+                //Series = chartSeries
             };
 
             return lineChartData;
@@ -157,7 +157,11 @@ namespace XF_FreeDiving.Service.Impements
             var value = r.Next(0, 700);
             do
             {
-                entries.Add(new ChartEntry(value) { ValueLabel = value.ToString(), Label = withLabel ? label.ToString() : null });
+                entries.Add(new ChartEntry(value)
+                {
+                    ValueLabel = value.ToString(),
+                    Label = withLabel ? label.ToString() : null
+                });
                 value = r.Next(0, 700);
                 label += 5;
             }

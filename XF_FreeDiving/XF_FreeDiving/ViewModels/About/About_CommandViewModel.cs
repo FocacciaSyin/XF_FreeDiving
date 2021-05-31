@@ -38,6 +38,7 @@ namespace XF_FreeDiving.ViewModels.About
                             await _divingLogService.DeleteItemAsync(item.ID);
                             DivingLogs = await _divingLogService.GetAllAsync();
                             DivingLogs = DivingLogs.OrderByDescending(r => r.createDate).ToList();
+                            ChartData = await _divingLogService.GetChartData();
                         }
                     });
                 }
@@ -66,12 +67,15 @@ namespace XF_FreeDiving.ViewModels.About
                     createDate = DateTime.Now
                 };
 
-                //寫入資料到 Sqlite;
+                //寫入資料;
                 await Task.Run(async () =>
                 {
                     await _divingLogService.InsertAsync(itemDivingLog);
+                    
+                    //重新 Loading 畫面上的資料
                     DivingLogs = await _divingLogService.GetAllAsync();
                     DivingLogs = DivingLogs.OrderByDescending(r => r.createDate).ToList();
+                    ChartData = await _divingLogService.GetChartData();
                 });
             }
             else

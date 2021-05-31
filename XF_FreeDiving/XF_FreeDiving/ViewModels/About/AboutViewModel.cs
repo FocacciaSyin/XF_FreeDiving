@@ -13,8 +13,6 @@ namespace XF_FreeDiving.ViewModels.About
     {
         private readonly Stopwatch _stopwatch;
 
-        private List<DivingLog> _divingLogs;
-
         private readonly IDivingLogService _divingLogService;
 
         /// <summary>
@@ -56,29 +54,6 @@ namespace XF_FreeDiving.ViewModels.About
 
             TimeStartCommand = new Command(ExecuteStartTimer);
             TimeStopCommand = new Command(ExecuteStopTimer);
-        }
-
-        /// <summary>
-        /// 歷史紀錄
-        /// </summary>
-        public List<DivingLog> DivingLogs
-        {
-            get { return _divingLogs; }
-            set { SetProperty(ref _divingLogs, value); }
-        }
-
-        private LineChart _chartData;
-
-        /// <summary>
-        /// 取得圖表資料
-        /// </summary>
-        /// <value>
-        /// The chart data.
-        /// </value>
-        public LineChart ChartData
-        {
-            get { return _chartData; }
-            set { SetProperty(ref _chartData, value); }
         }
     }
 }
