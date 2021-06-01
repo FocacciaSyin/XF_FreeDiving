@@ -2,7 +2,30 @@
 <ContentView
     x:Class="XF_FreeDiving.Views.Controls.Users"
     xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <!--  Start CollectionView背選擇到的Style  -->
+            <Style TargetType="StackLayout">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal" />
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="Transparent" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+            <!--  End CollectionView背選擇到的Style  -->
+        </ResourceDictionary>
+    </ContentView.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -31,10 +54,36 @@
             VerticalOptions="FillAndExpand">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout Margin="10">
+                    <StackLayout>
+                        <yummy:PancakeView
+                            x:Name="cornerRadius"
+                            Margin="10,3"
+                            CornerRadius="20"
+                            HorizontalOptions="FillAndExpand"
+                            WidthRequest="65">
+                            <yummy:PancakeView.Border>
+                                <yummy:Border Thickness="5" Color="#707070" />
+                            </yummy:PancakeView.Border>
+                            <Image
+                                Aspect="AspectFill"
+                                HorizontalOptions="Center"
+                                Opacity=".8"
+                                Source="{Binding ImagePath}"
+                                VerticalOptions="Center" />
+
+                        </yummy:PancakeView>
+                        <Label
+                            FontAttributes="Bold"
+                            HorizontalOptions="Center"
+                            Text="{Binding UserName}"
+                            TextColor="White"
+                            TranslationY="-0"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+
+                    <!--<StackLayout Margin="10">
                         <Frame
                             Padding="0"
-                            BorderColor="#01E3D6"
                             CornerRadius="40"
                             HasShadow="True"
                             HeightRequest="60"
@@ -44,14 +93,7 @@
                             WidthRequest="60">
                             <Image Opacity=".8" Source="{Binding ImagePath}" />
                         </Frame>
-                        <Label
-                            FontAttributes="Bold"
-                            HorizontalOptions="Center"
-                            Text="{Binding UserName}"
-                            TextColor="White"
-                            TranslationY="-10"
-                            VerticalOptions="Center" />
-                    </StackLayout>
+                    </StackLayout>-->
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
