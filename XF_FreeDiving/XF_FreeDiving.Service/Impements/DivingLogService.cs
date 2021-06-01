@@ -73,39 +73,63 @@ namespace XF_FreeDiving.Service.Impements
         }
 
         /// <summary>
+        /// 取得使用者前一筆執行時間
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<DivingLog> GetUserLastDateAsync(string name)
+        {
+            var divingLogs = await _divingLogRepository.GetAllAsync();
+
+            var divingLog = divingLogs.OrderByDescending(o => o.createDate)
+                .ToList()
+                .Find(x => x.name == name);
+
+            return divingLog;
+        }
+
+        /// <summary>
         /// 取得所有資料
         /// </summary>
         /// <returns></returns>
         public async Task<List<DivingLog>> GetAllAsync()
         {
-            return await _divingLogRepository.GetAllAsync();
+            var divingLogs = await _divingLogRepository.GetAllAsync();
+            return divingLogs.OrderByDescending(r => r.createDate).ToList();
         }
 
         /// <summary>
         /// 取得圖表資訊
         /// </summary>
+        /// <param name="name"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<LineChart> GetChartData()
+        public async Task<LineChart> GetChartData(string name = null)
         {
-            Random r = new Random((int)DateTime.Now.Ticks);
-
             var divingLogs = await _divingLogRepository.GetAllAsync();
 
             //填值
             var chartSeries = new List<ChartSerie>();
 
-            var userDivingLogs = divingLogs.FindAll(x => x.name == "Woody");
+            var userDivingLogs = divingLogs.FindAll(x => x.name == name);
 
             var chartEntries = new List<ChartEntry>();
 
-            for (int i = 0; i < userDivingLogs.Count; i++)
+            if (userDivingLogs.Count > 0)
             {
-                chartEntries.Add(new ChartEntry((int)userDivingLogs[i].time.TotalSeconds)
+                for (int i = 0; i < userDivingLogs.Count; i++)
                 {
-                    ValueLabel = ((int)userDivingLogs[i].time.TotalSeconds).ToString(),
-                    Label = i.ToString(),
-                });
+                    chartEntries.Add(new ChartEntry((int)userDivingLogs[i].time.TotalSeconds)
+                    {
+                        ValueLabel = ((int)userDivingLogs[i].time.TotalSeconds).ToString(),
+                        Label = (i + 1).ToString(),
+                    });
+                }
+            }
+            else
+            {
+                chartEntries = null;
             }
 
             chartSeries.Add(new ChartSerie()
@@ -116,7 +140,6 @@ namespace XF_FreeDiving.Service.Impements
             });
 
             //分開存到 ChartEntry 中
-
             var lineChartData = new LineChart()
             {
                 Entries = chartEntries,
@@ -125,18 +148,6 @@ namespace XF_FreeDiving.Service.Impements
                 ValueLabelOrientation = Orientation.Horizontal,
                 BackgroundColor = SKColor.Parse("#409BD1"),
                 Margin = 40
-
-                //LabelOrientation = Orientation.Horizontal,
-                //ValueLabelOrientation = Orientation.Horizontal,
-                //LabelTextSize = 42,
-                //ValueLabelTextSize = 30,
-                //SerieLabelTextSize = 50,
-                //LineAreaAlpha = 10,
-                //ShowYAxisLines = true,
-                //ShowYAxisText = true,
-                //YAxisPosition = Position.Left,
-                //BackgroundColor = SKColor.Parse("#409BD1"),
-                //Series = chartSeries
             };
 
             return lineChartData;

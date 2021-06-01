@@ -39,6 +39,13 @@ namespace XF_FreeDiving.Service.Interfaces
         Task<DivingLog> GetByIdAsync(Guid id);
 
         /// <summary>
+        /// 取得使用者前一筆執行時間
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <returns></returns>
+        Task<DivingLog> GetUserLastDateAsync(string name);
+
+        /// <summary>
         /// 取得所有資料
         /// </summary>
         /// <returns></returns>
@@ -47,6 +54,7 @@ namespace XF_FreeDiving.Service.Interfaces
         /// <summary>
         /// 取得圖表資訊
         /// </summary>
-        Task<LineChart> GetChartData();
+        /// <param name="name"></param>
+        Task<LineChart> GetChartData(string name = null);
     }
 }

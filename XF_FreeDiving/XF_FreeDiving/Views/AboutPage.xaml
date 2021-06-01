@@ -92,6 +92,8 @@
                     Grid.Row="1"
                     Margin="120,5"
                     BackgroundColor="#01E3D6"
+                    BorderColor="#707070"
+                    BorderWidth="3"
                     Command="{Binding TimeStartCommand}"
                     CornerRadius="20"
                     FontAttributes="Bold"
@@ -136,18 +138,21 @@
                                     <ViewCell>
                                         <Grid
                                             x:Name="gLayout"
-                                            Margin="30,10"
+                                            Margin="10,10"
                                             VerticalOptions="Center">
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="30" />
-                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="35" />
+                                                <ColumnDefinition Width="35" />
+                                                <ColumnDefinition Width="100" />
                                                 <ColumnDefinition Width="*" />
                                                 <ColumnDefinition Width="50" />
                                             </Grid.ColumnDefinitions>
                                             <Frame
                                                 Grid.Column="0"
+                                                Margin="3,0"
                                                 Padding="0"
-                                                Background="orange"
+                                                Background="white"
+                                                BorderColor="#707070"
                                                 CornerRadius="10"
                                                 TranslationY="2"
                                                 VerticalOptions="Center">
@@ -155,16 +160,25 @@
                                                     FontSize="Medium"
                                                     HorizontalOptions="Center"
                                                     Text="{Binding sort}"
-                                                    TextColor="White" />
+                                                    TextColor="#707070" />
                                             </Frame>
+
                                             <Label
                                                 Grid.Column="1"
+                                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                                FontSize="25"
+                                                HorizontalOptions="End"
+                                                Text="{Binding UpOrDown}"
+                                                TextColor="#B0384C"
+                                                VerticalOptions="Center" />
+                                            <Label
+                                                Grid.Column="2"
                                                 FontSize="Medium"
                                                 HorizontalOptions="Center"
                                                 Text="{Binding name}"
                                                 VerticalOptions="Center" />
                                             <Label
-                                                Grid.Column="2"
+                                                Grid.Column="3"
                                                 FontSize="Medium"
                                                 HorizontalOptions="End"
                                                 VerticalOptions="Center">
@@ -177,7 +191,7 @@
                                                 </Label.FormattedText>
                                             </Label>
                                             <Label
-                                                Grid.Column="3"
+                                                Grid.Column="4"
                                                 HorizontalOptions="End"
                                                 VerticalOptions="Center">
                                                 <Label.FormattedText>

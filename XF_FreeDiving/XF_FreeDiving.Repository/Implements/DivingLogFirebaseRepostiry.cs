@@ -133,7 +133,8 @@ namespace XF_FreeDiving.Repository.Implements
                     sort = i + 1,
                     name = item.Object.name,
                     time = item.Object.time,
-                    createDate = item.Object.createDate
+                    createDate = item.Object.createDate,
+                    UpOrDown = item.Object.UpOrDown
                 }).ToList();
         }
     }

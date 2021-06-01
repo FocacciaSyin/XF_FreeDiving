@@ -45,5 +45,18 @@ namespace XF_FreeDiving.Repository.Entities
         /// The create date.
         /// </value>
         public DateTime createDate { get; set; }
+
+        /// <summary>
+        /// 判斷比前一次是進步或是退步
+        /// 設定 FontAwesomeIcons<br/>
+        /// 
+        /// 上升 : ChevronCircleUp<br/>
+        /// 
+        /// 下降 : ChevronDoubleDown
+        /// </summary>
+        /// <value>
+        /// Up or down.
+        /// </value>
+        public string UpOrDown { get; set; }
     }
 }

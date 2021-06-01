@@ -21,7 +21,7 @@
         <CollectionView
             x:Name="cvUsers"
             Grid.Row="1"
-            Margin="40,10,0,30"
+            Margin="40,10,0,1"
             HeightRequest="100"
             HorizontalScrollBarVisibility="Never"
             ItemsLayout="HorizontalList"

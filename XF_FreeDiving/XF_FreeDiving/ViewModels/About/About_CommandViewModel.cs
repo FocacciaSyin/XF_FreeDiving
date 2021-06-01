@@ -36,9 +36,8 @@ namespace XF_FreeDiving.ViewModels.About
                         if (result)
                         {
                             await _divingLogService.DeleteItemAsync(item.ID);
-                            DivingLogs = await _divingLogService.GetAllAsync();
-                            DivingLogs = DivingLogs.OrderByDescending(r => r.createDate).ToList();
-                            ChartData = await _divingLogService.GetChartData();
+
+                            await LoadValue();
                         }
                     });
                 }
@@ -51,6 +50,7 @@ namespace XF_FreeDiving.ViewModels.About
         /// </summary>
         private async void ExecuteStopTimer()
         {
+            string _upOrDown = null;
             _stopwatch.Stop();
 
             IsStart = true;
@@ -58,25 +58,26 @@ namespace XF_FreeDiving.ViewModels.About
 
             if (SelectedUser != null)
             {
+                //取得前一筆資料
+                var lastData = await _divingLogService.GetUserLastDateAsync(SelectedUser.UserName);
+                if (lastData != null)
+                {
+                    _upOrDown = (Timer > lastData.time) ? FontAwesomeIcons.ChevronCircleUp : FontAwesomeIcons.ChevronCircleDown;
+                }
+
                 //執行 Insert
                 DivingLog itemDivingLog = new DivingLog()
                 {
                     ID = Guid.NewGuid(),
                     name = SelectedUser.UserName,
                     time = Timer,
-                    createDate = DateTime.Now
+                    createDate = DateTime.Now,
+                    UpOrDown = _upOrDown
                 };
 
                 //寫入資料;
-                await Task.Run(async () =>
-                {
-                    await _divingLogService.InsertAsync(itemDivingLog);
-                    
-                    //重新 Loading 畫面上的資料
-                    DivingLogs = await _divingLogService.GetAllAsync();
-                    DivingLogs = DivingLogs.OrderByDescending(r => r.createDate).ToList();
-                    ChartData = await _divingLogService.GetChartData();
-                });
+                await _divingLogService.InsertAsync(itemDivingLog);
+                await LoadValue();
             }
             else
             {
@@ -105,6 +106,15 @@ namespace XF_FreeDiving.ViewModels.About
             {
                 await Application.Current.MainPage.DisplayAlert("注意", "請先選擇使用者", "OK");
             }
+        }
+
+        /// <summary>
+        /// 取得當下最新資料
+        /// </summary>
+        private async Task LoadValue()
+        {
+            DivingLogs = await _divingLogService.GetAllAsync();
+            ChartData = await _divingLogService.GetChartData(SelectedUser?.UserName);
         }
     }
 }
