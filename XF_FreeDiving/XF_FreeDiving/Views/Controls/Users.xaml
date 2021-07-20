@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="XF_FreeDiving.Views.Controls.Users"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <!--  Start CollectionView背選擇到的Style  -->
+            <Style TargetType="StackLayout">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal" />
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="#D4DDF3" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+            <!--  End CollectionView背選擇到的Style  -->
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Label
+            Grid.Row="0"
+            Margin="25,10,0,0"
+            FontAttributes="Bold"
+            FontSize="Medium"
+            HorizontalTextAlignment="Start"
+            Text="使用者"
+            TextColor="White" />
+
+        <CollectionView
+            x:Name="cvUsers"
+            Grid.Row="1"
+            Margin="40,10,0,1"
+            HeightRequest="100"
+            HorizontalScrollBarVisibility="Never"
+            ItemsLayout="HorizontalList"
+            ItemsSource="{Binding Users}"
+            SelectedItem="{Binding SelectedUser}"
+            SelectionMode="Single"
+            VerticalOptions="FillAndExpand">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout>
+                        <yummy:PancakeView
+                            x:Name="cornerRadius"
+                            Margin="10,3"
+                            CornerRadius="20"
+                            HorizontalOptions="FillAndExpand"
+                            WidthRequest="65">
+                            <yummy:PancakeView.Border>
+                                <yummy:Border Thickness="5" Color="#707070" />
+                            </yummy:PancakeView.Border>
+                            <Image
+                                Aspect="AspectFill"
+                                HorizontalOptions="Center"
+                                Opacity=".8"
+                                Source="{Binding ImagePath}"
+                                VerticalOptions="Center" />
+                        </yummy:PancakeView>
+                        <Label
+                            FontAttributes="Bold"
+                            HorizontalOptions="Center"
+                            Text="{Binding UserName}"
+                            TextColor="White"
+                            TranslationY="-0"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+
+                    <!--<StackLayout Margin="10">
+                        <Frame
+                            Padding="0"
+                            CornerRadius="40"
+                            HasShadow="True"
+                            HeightRequest="60"
+                            HorizontalOptions="Center"
+                            IsClippedToBounds="True"
+                            VerticalOptions="CenterAndExpand"
+                            WidthRequest="60">
+                            <Image Opacity=".8" Source="{Binding ImagePath}" />
+                        </Frame>
+                    </StackLayout>-->
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentView>

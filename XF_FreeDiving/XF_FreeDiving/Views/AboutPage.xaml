@@ -1,12 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+
 <ContentPage
     x:Class="XF_FreeDiving.Views.AboutPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:fas="clr-namespace:FontAwesome"
+    xmlns:controls="clr-namespace:XF_FreeDiving.Views.Controls;assembly=XF_FreeDiving"
+    xmlns:fas="clr-namespace:XF_FreeDiving"
     xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
+    xmlns:prism="http://prismlibrary.com"
     xmlns:system="clr-namespace:System;assembly=netstandard"
-    xmlns:vm="clr-namespace:XF_FreeDiving.ViewModels"
     xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
     x:Name="AboutContentPage"
     Title="{Binding Title}"
@@ -16,148 +18,44 @@
         <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" />
     </ContentPage.Padding>
 
-    <ContentPage.BindingContext>
-        <vm:AboutViewModel />
-    </ContentPage.BindingContext>
-
     <ContentPage.Resources>
         <ResourceDictionary>
-            <!--  Start CollectionView背選擇到的Style  -->
-            <Style TargetType="StackLayout">
-                <Setter Property="VisualStateManager.VisualStateGroups">
-                    <VisualStateGroupList>
-                        <VisualStateGroup x:Name="CommonStates">
-                            <VisualState x:Name="Normal" />
-                            <VisualState x:Name="Selected">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="#01E3D6" />
-                                    <Setter Property="Opacity" Value="1" />
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateGroupList>
-                </Setter>
-            </Style>
-            <!--  End CollectionView背選擇到的Style  -->
             <Color x:Key="Accent">#96d1ff</Color>
         </ResourceDictionary>
     </ContentPage.Resources>
 
     <AbsoluteLayout>
-        <Image AbsoluteLayout.LayoutBounds="120,100,350,350" Source="Image/Whale.png" />
+
+        <Image AbsoluteLayout.LayoutBounds="80,100,350,350" Source="Whale.png" />
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <!--  選擇使用者 Start  -->
-            <Label
-                Grid.Row="0"
-                Margin="25,10,0,0"
-                FontAttributes="Bold"
-                FontSize="Medium"
-                HorizontalTextAlignment="Start"
-                Text="使用者"
-                TextColor="White" />
-            <CollectionView
-                x:Name="cvUsers"
-                Grid.Row="1"
-                Margin="40,10,0,30"
-                HeightRequest="100"
-                HorizontalScrollBarVisibility="Never"
-                ItemsLayout="HorizontalList"
-                ItemsSource="{Binding Users}"
-                SelectedItem="{Binding SelectedUser}"
-                SelectionMode="Single"
-                VerticalOptions="FillAndExpand">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <StackLayout Margin="10">
-                            <Frame
-                                Padding="0"
-                                BorderColor="#01E3D6"
-                                CornerRadius="40"
-                                HasShadow="True"
-                                HeightRequest="60"
-                                IsClippedToBounds="True"
-                                WidthRequest="60"
-                                HorizontalOptions="Center"
-                                VerticalOptions="CenterAndExpand">
-                                <Image Opacity=".8" Source="{Binding ImagePath}" />
-                            </Frame>
-                            <Label
-                                FontAttributes="Bold"
-                                Text="{Binding UserName}"
-                                TextColor="White"
-                                TranslationY="-10"
-                                HorizontalOptions="Center"
-                                VerticalOptions="Center" />
-                        </StackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-            <!--  選擇使用者 End  -->
-            <Label
-                Grid.Row="2"
-                Margin="25,0,0,0"
-                FontAttributes="Bold"
-                FontSize="Medium"
-                HorizontalTextAlignment="Start"
-                IsVisible="false"
-                Text="紀錄種類"
-                TextColor="White" />
-            <CollectionView
-                x:Name="cvTypes"
-                Grid.Row="3"
-                Margin="20,10,0,0"
-                HeightRequest="70"
-                HorizontalScrollBarVisibility="Never"
-                IsVisible="false"
-                ItemsLayout="HorizontalList"
-                ItemsSource="{Binding LogTypes}"
-                VerticalOptions="FillAndExpand">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <StackLayout>
-                            <Button
-                                Margin="10,0"
-                                BackgroundColor="#5B5151"
-                                CornerRadius="20"
-                                FontAttributes="Bold"
-                                HeightRequest="50"
-                                Text="{Binding TypeName}"
-                                TextColor="White"
-                                WidthRequest="100">
-                                <!--<Button.CornerRadius>
-                                    <OnPlatform x:TypeArguments="x:Int32">
-                                        <On Platform="iOS" Value="20" />
-                                        <On Platform="Android" Value="30" />
-                                        <On Platform="UWP" Value="15" />
-                                    </OnPlatform>
-                                </Button.CornerRadius>-->
-                            </Button>
-                        </StackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+
+            <!--  選擇 使用者  -->
+            <controls:Users Grid.Row="0" />
+            <!--  選擇 計數種類  -->
+
+            <controls:Types Grid.Row="1" IsVisible="false" />
+
             <BoxView
-                Grid.Row="4"
+                Grid.Row="2"
                 BackgroundColor="#707070"
                 CornerRadius="40,40,0,0"
-                Opacity=".4"
-                HorizontalOptions="FillAndExpand" />
+                HorizontalOptions="FillAndExpand"
+                Opacity=".4" />
+
             <BoxView
-                Grid.Row="4"
+                Grid.Row="2"
                 Margin="5,5,5,0"
                 BackgroundColor="#409BD1"
                 CornerRadius="40,40,0,0"
-                Opacity=".8"
-                HorizontalOptions="FillAndExpand" />
+                HorizontalOptions="FillAndExpand"
+                Opacity=".8" />
 
-            <Grid Grid.Row="4" Margin="5,5,5,0">
+            <Grid Grid.Row="2" Margin="5,5,5,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -178,6 +76,8 @@
                     Grid.Row="1"
                     Margin="120,5"
                     BackgroundColor="#01E3D6"
+                    BorderColor="#707070"
+                    BorderWidth="3"
                     Command="{Binding TimeStartCommand}"
                     CornerRadius="20"
                     FontAttributes="Bold"
@@ -205,13 +105,13 @@
                     VerticalOptions="FillAndExpand">
                     <xct:TabViewItem
                         FontAttributes="Bold"
+                        FontSize="20"
                         Text="歷次紀錄"
                         TextColor="White"
                         TextColorSelected="Orange">
                         <ListView
                             x:Name="lvDivingLog"
                             BackgroundColor="#409BD1"
-                            ItemSelected="lvDivingLog_ItemSelected"
                             ItemsSource="{Binding DivingLogs}"
                             RefreshControlColor="Red"
                             RowHeight="80"
@@ -222,36 +122,47 @@
                                     <ViewCell>
                                         <Grid
                                             x:Name="gLayout"
-                                            Margin="30,10"
+                                            Margin="10,10"
                                             VerticalOptions="Center">
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="30" />
-                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="35" />
+                                                <ColumnDefinition Width="35" />
+                                                <ColumnDefinition Width="100" />
                                                 <ColumnDefinition Width="*" />
                                                 <ColumnDefinition Width="50" />
                                             </Grid.ColumnDefinitions>
                                             <Frame
                                                 Grid.Column="0"
+                                                Margin="3,0"
                                                 Padding="0"
-                                                Background="red"
+                                                Background="white"
+                                                BorderColor="#707070"
                                                 CornerRadius="10"
-                                                HasShadow="False"
-                                                Opacity="0.4"
+                                                TranslationY="2"
                                                 VerticalOptions="Center">
                                                 <Label
                                                     FontSize="Medium"
-                                                    Text="{Binding ID}"
-                                                    TextColor="White"
-                                                    HorizontalOptions="Center" />
+                                                    HorizontalOptions="Center"
+                                                    Text="{Binding sort}"
+                                                    TextColor="#707070" />
                                             </Frame>
+
                                             <Label
                                                 Grid.Column="1"
-                                                FontSize="Medium"
-                                                Text="{Binding name}"
-                                                HorizontalOptions="Center"
+                                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                                FontSize="25"
+                                                HorizontalOptions="End"
+                                                Text="{Binding UpOrDown}"
+                                                TextColor="#B0384C"
                                                 VerticalOptions="Center" />
                                             <Label
                                                 Grid.Column="2"
+                                                FontSize="Medium"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding name}"
+                                                VerticalOptions="Center" />
+                                            <Label
+                                                Grid.Column="3"
                                                 FontSize="Medium"
                                                 HorizontalOptions="End"
                                                 VerticalOptions="Center">
@@ -264,7 +175,7 @@
                                                 </Label.FormattedText>
                                             </Label>
                                             <Label
-                                                Grid.Column="3"
+                                                Grid.Column="4"
                                                 HorizontalOptions="End"
                                                 VerticalOptions="Center">
                                                 <Label.FormattedText>
@@ -292,13 +203,36 @@
                     </xct:TabViewItem>
                     <xct:TabViewItem
                         FontAttributes="Bold"
+                        FontSize="16"
                         Text="圖表"
                         TextColor="White"
                         TextColorSelected="Orange">
-                        <microcharts:ChartView x:Name="chartView" />
+                        <microcharts:ChartView x:Name="ChartView" Chart="{Binding ChartData}" />
                     </xct:TabViewItem>
                 </xct:TabView>
             </Grid>
         </Grid>
+        <Ellipse
+            x:Name="BubbleL"
+            AbsoluteLayout.LayoutBounds="460,20,24,23"
+            Fill="white"
+            Opacity=".6"
+            Stroke="#85B2B2"
+            StrokeThickness="3" />
+        <Ellipse
+            x:Name="BubbleM"
+            AbsoluteLayout.LayoutBounds="450,50,20,20"
+            Fill="white"
+            Opacity=".5"
+            Stroke="#85B2B2"
+            StrokeThickness="3" />
+        <Ellipse
+            x:Name="BubbleS"
+            AbsoluteLayout.LayoutBounds="465,77,16,16"
+            Fill="white"
+            Opacity=".4"
+            Stroke="#85B2B2"
+            StrokeThickness="3" />
+
     </AbsoluteLayout>
 </ContentPage>

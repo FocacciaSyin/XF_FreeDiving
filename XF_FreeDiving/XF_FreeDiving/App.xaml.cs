@@ -1,47 +1,57 @@
-﻿using Xamarin.Forms;
-using XF_FreeDiving.Data;
-using XF_FreeDiving.Services;
+﻿using Prism.DryIoc;
+using Prism.Ioc;
+using Xamarin.Forms;
+using XF_FreeDiving.Repository.Entities;
+using XF_FreeDiving.Repository.Helpers.Firebase;
+using XF_FreeDiving.Repository.Helpers.Interfaces;
+using XF_FreeDiving.Repository.Helpers.SQLite;
+using XF_FreeDiving.Repository.Implements;
+using XF_FreeDiving.Repository.Interfaces;
+using XF_FreeDiving.Service.Impements;
+using XF_FreeDiving.Service.Interfaces;
+using XF_FreeDiving.ViewModels;
+using XF_FreeDiving.ViewModels.About;
 using XF_FreeDiving.Views;
+using XF_FreeDiving.Views.Controls;
 
 namespace XF_FreeDiving
 {
-    public partial class App : Application
+    public partial class App
     {
-        private static DivingLogDatabase database;
-
         public App()
         {
-            InitializeComponent();
-
-            DependencyService.Register<MockDataStore>();
-            MainPage = new AboutPage();
         }
 
         /// <summary>
-        /// SQLite設定
+        /// Called when the PrismApplication has completed it's initialization process.
         /// </summary>
-        public static DivingLogDatabase Database
+        protected override async void OnInitialized()
         {
-            get
-            {
-                if (database == null)
-                {
-                    database = new DivingLogDatabase();
-                }
-                return database;
-            }
+            InitializeComponent();
+
+            await NavigationService.NavigateAsync("AboutPage");
         }
 
-        protected override void OnStart()
+        /// <summary>
+        /// [DI]注入相關都寫在這裡
+        /// </summary>
+        /// <param name="containerRegistry"></param>
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-        }
+            containerRegistry.RegisterForNavigation<NavigationPage>();
+            containerRegistry.RegisterForNavigation<AboutPage, AboutViewModel>();
+            //[Repository]
+            containerRegistry.RegisterScoped<ISQLiteHelper, DivingLogSQLiteHelper>();
+            containerRegistry.RegisterScoped<IFirebaseHelper, DivingLogFirebaseHelper>();
+            containerRegistry.RegisterScoped<IDataStore<DivingLog>, DivingLogFirebaseRepostiry>();
 
-        protected override void OnSleep()
-        {
-        }
+            //[Service]
+            containerRegistry.RegisterScoped<IDivingLogService, DivingLogService>();
 
-        protected override void OnResume()
-        {
+            //[Regions]
+            containerRegistry.RegisterRegionServices();
+            //containerRegistry.RegisterForRegionNavigation<Types, AboutViewModel>();
+            //containerRegistry.RegisterForRegionNavigation<Users, AboutViewModel>();
         }
     }
 }
