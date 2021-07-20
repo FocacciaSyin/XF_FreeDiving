@@ -15,7 +15,7 @@
                             <VisualState x:Name="Normal" />
                             <VisualState x:Name="Selected">
                                 <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="Transparent" />
+                                    <Setter Property="BackgroundColor" Value="#D4DDF3" />
                                 </VisualState.Setters>
                             </VisualState>
                         </VisualStateGroup>
@@ -70,7 +70,6 @@
                                 Opacity=".8"
                                 Source="{Binding ImagePath}"
                                 VerticalOptions="Center" />
-
                         </yummy:PancakeView>
                         <Label
                             FontAttributes="Bold"

@@ -25,6 +25,7 @@
     </ContentPage.Resources>
 
     <AbsoluteLayout>
+
         <Image AbsoluteLayout.LayoutBounds="80,100,350,350" Source="Whale.png" />
         <Grid>
             <Grid.RowDefinitions>
@@ -211,5 +212,27 @@
                 </xct:TabView>
             </Grid>
         </Grid>
+        <Ellipse
+            x:Name="BubbleL"
+            AbsoluteLayout.LayoutBounds="460,20,24,23"
+            Fill="white"
+            Opacity=".6"
+            Stroke="#85B2B2"
+            StrokeThickness="3" />
+        <Ellipse
+            x:Name="BubbleM"
+            AbsoluteLayout.LayoutBounds="450,50,20,20"
+            Fill="white"
+            Opacity=".5"
+            Stroke="#85B2B2"
+            StrokeThickness="3" />
+        <Ellipse
+            x:Name="BubbleS"
+            AbsoluteLayout.LayoutBounds="465,77,16,16"
+            Fill="white"
+            Opacity=".4"
+            Stroke="#85B2B2"
+            StrokeThickness="3" />
+
     </AbsoluteLayout>
 </ContentPage>
