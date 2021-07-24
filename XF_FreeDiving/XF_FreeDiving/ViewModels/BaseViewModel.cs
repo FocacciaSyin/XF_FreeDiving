@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-
 using Xamarin.Forms;
+using XF_FreeDiving.Repository.Entities;
+using XF_FreeDiving.Repository.Interfaces;
 
 namespace XF_FreeDiving.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
+        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
+
         private bool isBusy = false;
 
         public bool IsBusy
