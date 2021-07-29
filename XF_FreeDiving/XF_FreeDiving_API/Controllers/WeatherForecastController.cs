@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace XF_FreeDiving_API.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
