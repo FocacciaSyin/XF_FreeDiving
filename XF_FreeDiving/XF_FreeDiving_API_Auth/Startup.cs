@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -10,10 +12,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 
-namespace XF_FreeDiving_API
+namespace XF_FreeDiving_API_Auth
 {
     public class Startup
     {
@@ -27,10 +27,8 @@ namespace XF_FreeDiving_API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services
-                .AddAuthentication(AzureADDefaults.BearerAuthenticationScheme)
+            services.AddAuthentication(AzureADDefaults.BearerAuthenticationScheme)
                 .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));
-
             services.AddControllers();
 
             services.AddSwaggerGen();
@@ -44,16 +42,16 @@ namespace XF_FreeDiving_API
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseHttpsRedirection();
+
+            app.UseRouting();
+
             app.UseSwagger();
 
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
-
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();

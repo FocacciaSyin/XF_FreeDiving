@@ -1,15 +1,15 @@
-name: Build and deploy .NET Core app to Windows WebApp XF-FreeDiving-API
+name: Build and deploy .NET Core app to Windows WebApp XFFreeDivingAPIAuth20210802
 on:
   push:
     branches:
     - master
 env:
-  AZURE_WEBAPP_NAME: XF-FreeDiving-API
-  AZURE_WEBAPP_PACKAGE_PATH: XF_FreeDiving\XF_FreeDiving_API/publish
-  AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.XF_FreeDiving_API_1e08 }}
+  AZURE_WEBAPP_NAME: XFFreeDivingAPIAuth20210802
+  AZURE_WEBAPP_PACKAGE_PATH: XF_FreeDiving\XF_FreeDiving_API_Auth/publish
+  AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.XFFreeDivingAPIAuth20210802_fe9f }}
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 5.0.x
-  WORKING_DIRECTORY: XF_FreeDiving\XF_FreeDiving_API
+  WORKING_DIRECTORY: XF_FreeDiving\XF_FreeDiving_API_Auth
 jobs:
   build-and-deploy:
     runs-on: windows-latest

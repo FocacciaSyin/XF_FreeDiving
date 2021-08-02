@@ -1,6 +1,6 @@
 using System;
 
-namespace XF_FreeDiving_API
+namespace XF_FreeDiving_API_Auth
 {
     public class WeatherForecast
     {
