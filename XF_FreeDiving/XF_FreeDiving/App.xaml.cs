@@ -29,7 +29,7 @@ namespace XF_FreeDiving
         {
             InitializeComponent();
 
-            await NavigationService.NavigateAsync("AboutPage");
+            await NavigationService.NavigateAsync("LoginPage");
         }
 
         /// <summary>
@@ -52,6 +52,7 @@ namespace XF_FreeDiving
             containerRegistry.RegisterRegionServices();
             //containerRegistry.RegisterForRegionNavigation<Types, AboutViewModel>();
             //containerRegistry.RegisterForRegionNavigation<Users, AboutViewModel>();
+            containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
         }
     }
 }

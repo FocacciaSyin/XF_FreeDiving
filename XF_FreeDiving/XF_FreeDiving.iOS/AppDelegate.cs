@@ -22,7 +22,21 @@ namespace XF_FreeDiving.iOS
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
 
+            global::Xamarin.Auth.Presenters.XamarinIOS.AuthenticationConfiguration.Init();
+
             return base.FinishedLaunching(app, options);
         }
+
+        #region Essentials Oauth Login 要加入的項目
+
+        public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
+        {
+            if (Xamarin.Essentials.Platform.OpenUrl(app, url, options))
+                return true;
+
+            return base.OpenUrl(app, url, options);
+        }
+
+        #endregion Essentials Oauth Login 要加入的項目
     }
 }

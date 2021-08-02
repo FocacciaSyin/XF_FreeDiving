@@ -62,6 +62,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
+
                 <Label
                     x:Name="lbStopWatch"
                     Grid.Row="0"
@@ -233,6 +234,5 @@
             Opacity=".4"
             Stroke="#85B2B2"
             StrokeThickness="3" />
-
     </AbsoluteLayout>
 </ContentPage>

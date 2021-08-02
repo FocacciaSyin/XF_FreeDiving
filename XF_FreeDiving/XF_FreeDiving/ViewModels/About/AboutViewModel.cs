@@ -26,12 +26,11 @@ namespace XF_FreeDiving.ViewModels.About
             this._divingLogService = divingLogService;
             this._stopwatch = new Stopwatch();
 
-           
             Task.Run(async () =>
             {
                 //取得所有歷史資料
                 DivingLogs = await _divingLogService.GetAllAsync();
-                
+
                 //取得所有人歷史資料，並轉換成圖表格式
                 ChartData = await _divingLogService.GetChartData();
             });

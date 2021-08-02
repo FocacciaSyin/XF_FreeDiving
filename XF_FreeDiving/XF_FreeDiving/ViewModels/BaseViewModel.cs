@@ -8,6 +8,10 @@ using XF_FreeDiving.Repository.Interfaces;
 
 namespace XF_FreeDiving.ViewModels
 {
+    /// <summary>
+    /// 自己寫一個簡單的 MVVM BaseModel
+    /// </summary>
+    /// <seealso cref="System.ComponentModel.INotifyPropertyChanged" />
     public class BaseViewModel : INotifyPropertyChanged
     {
         public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();

@@ -2,6 +2,9 @@
 
 namespace XF_FreeDiving.Repository.Entities
 {
+    /// <summary>
+    /// 紀錄時間的種類
+    /// </summary>
     public class LogType
     {
         [PrimaryKey, AutoIncrement]
