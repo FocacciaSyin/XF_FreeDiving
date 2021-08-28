@@ -4,7 +4,9 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:prism="http://prismlibrary.com"
-    prism:ViewModelLocator.AutowireViewModel="True">
+    xmlns:viewmodels="clr-namespace:XF_FreeDiving.ViewModels"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    x:DataType="viewmodels:LoginPageViewModel">
 
     <StackLayout VerticalOptions="Center">
         <Button

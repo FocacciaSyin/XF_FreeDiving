@@ -2,12 +2,9 @@
 自己為了自由淺水閉氣練習的App順便練一下Xamarin.Forms
 
 - 記錄使用者該次閉氣時間
-
 - 使用FireBase作為紀錄**歷史紀錄**的方式
 
-  
-
-  
+> [2021/07] 使用Xamarin.Auth 進行 Google 原生登入驗證，成功實作但是覺得有點麻煩，為來有需要再補實作流程，想改用 Essential Web Auth實作，所以請改道另外一個分支看看實作結果。
 
 
 
@@ -48,14 +45,15 @@
     - [ ] 使用 `MVVM Data Binding` 的方式顯示資料
     - [ ] 使用 DI 注入取得資料 
     
-    
-
+  
 - [ ] 整理應用程式的Style為可以共用
 
 - [x] 使用CollectionView
 
   - [x] 建立使用者清單
   - [x] 增加 2:00 & 2:30 & 3:00 .... 的選項
+
+- [ ] 使用  Web Authenticator 進行登入驗證
 
 - [ ] 可自行新增使用者列表
 
@@ -74,5 +72,3 @@
 ![FreeDiving_Layout](https://raw.githubusercontent.com/FocacciaSyin/XF_FreeDiving/master/Layout/iPhone%20X%2C%20XS%2C%2011%20Pro%20%E2%80%93%201.png)
 
 
-
- 
