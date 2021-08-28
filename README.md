@@ -5,9 +5,9 @@
 
 - 使用FireBase作為紀錄**歷史紀錄**的方式
 
-  
+- 2021/08/28 使用 Web Authenticator 進行登入驗證
 
-  
+    
 
 
 
@@ -75,4 +75,17 @@
 
 
 
- 
+#  Web Authenticator
+
+## 實作紀錄
+
+> 參考資料：
+>
+> - [Xamarin.Essentials： Web Authenticator - Xamarin | Microsoft Docs](https://docs.microsoft.com/zh-tw/xamarin/essentials/web-authenticator?tabs=android)
+> - https://youtu.be/g8oh-dvfW1k
+
+### Azure 
+
+1. 透過 WebAPI 當作中介的登入跳板
+2. 把WebAPI 架在 Azure 上(使用免費空間)
+3. 
