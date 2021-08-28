@@ -88,4 +88,7 @@
 
 1. 透過 WebAPI 當作中介的登入跳板
 2. 把WebAPI 架在 Azure 上(使用免費空間)
+   1. 發佈 - 建立一個新的 AppService 執行個體 XFFreeDivingAPI-Essential-WebAuth
+   2. 使用 GitHub Actions
+   3. 
 3. 
