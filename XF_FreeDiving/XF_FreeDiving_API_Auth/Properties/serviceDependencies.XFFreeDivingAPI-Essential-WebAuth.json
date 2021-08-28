@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "apis1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ApiManagement/service/XFFreeDivingAPIAuthapi/apis/XFFreeDivingAPIAuth",
+      "type": "apis.azure",
+      "apiEndpoint": "https://xffreedivingapiauthapi.azure-api.net/"
+    }
+  }
+}
