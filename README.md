@@ -5,7 +5,7 @@
 
 - 使用FireBase作為紀錄**歷史紀錄**的方式
 
-- 2021/08/28 使用 Web Authenticator 進行登入驗證
+- 使用 Web Authenticator 進行登入驗證
 
     
 
@@ -87,8 +87,62 @@
 ### Azure 
 
 1. 透過 WebAPI 當作中介的登入跳板
+
 2. 把WebAPI 架在 Azure 上(使用免費空間)
    1. 發佈 - 建立一個新的 AppService 執行個體 XFFreeDivingAPI-Essential-WebAuth
-   2. 使用 GitHub Actions
-   3. 
-3. 
+   2. 使用 GitHub Actions (注意! 現在先跳過API管理這個項目，多了一個*服務主體秘密* 會發不過，這還要再研究不是現在要注意的東西)
+   3. 實作 MobileAuthController.cs
+      1. 注意 ` https://localhost:5001/mobileauth/Google`  Google G 要是大寫
+   
+3. App 端
+
+   1. 使用Prism所以功能都還是依照MVVM框架比較順
+
+   2. 參考LoginPageViewModel
+
+   3. Command參考範例
+
+      ```c#
+      private DelegateCommand _navigateCommand;
+      
+      public DelegateCommand GoogleLoginCommand => _navigateCommand ?? (_navigateCommand = new DelegateCommand(GoogleLogin));
+      
+      private async void GoogleLogin()
+      {
+      	//to Somthing
+      
+      }
+      ```
+
+   4. 取得使用者資訊
+
+      > https://www.googleapis.com/oauth2/v3/userinfo?access_token={0}
+
+   5. 透過Essentials 寫入 類似 Cookie的東西
+
+      ```c#
+      Settings.AccessToken = authToken;
+      
+      
+      ================================================================================
+          public static class Settings
+          {
+              /// <summary>
+              /// 使用者Token
+              /// </summary>
+              /// <value>
+              /// The access token.
+              /// </value>
+              public static string AccessToken
+              {
+                  get
+                  {
+                      return Preferences.Get("accestoken", SettingsDefault);
+                  }
+                  set
+                  {
+                      Preferences.Set("accestoken", value);
+                  }
+              }
+          }
+      ```

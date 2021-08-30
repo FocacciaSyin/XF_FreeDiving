@@ -1,6 +1,7 @@
 ﻿using Prism.DryIoc;
 using Prism.Ioc;
 using Xamarin.Forms;
+using XF_FreeDiving.Implements;
 using XF_FreeDiving.Repository.Entities;
 using XF_FreeDiving.Repository.Helpers.Firebase;
 using XF_FreeDiving.Repository.Helpers.Interfaces;
@@ -29,7 +30,15 @@ namespace XF_FreeDiving
         {
             InitializeComponent();
 
-            await NavigationService.NavigateAsync("AboutPage");
+            if (!string.IsNullOrEmpty(Settings.Email))
+            {
+                await NavigationService.NavigateAsync("AboutPage");
+            }
+            else
+            {
+                await NavigationService.NavigateAsync("LoginPage");
+            }
+            
         }
 
         /// <summary>
@@ -50,8 +59,7 @@ namespace XF_FreeDiving
 
             //[Regions]
             containerRegistry.RegisterRegionServices();
-            //containerRegistry.RegisterForRegionNavigation<Types, AboutViewModel>();
-            //containerRegistry.RegisterForRegionNavigation<Users, AboutViewModel>();
+            containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
         }
     }
 }

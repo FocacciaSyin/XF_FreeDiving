@@ -2,6 +2,7 @@
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
+using XF_FreeDiving.Constants;
 
 namespace XF_FreeDiving.Droid
 {
@@ -26,5 +27,17 @@ namespace XF_FreeDiving.Droid
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+    }
+
+    /// <summary>
+    /// WebAuthenticator
+    /// </summary>
+    /// <seealso cref="Xamarin.Essentials.WebAuthenticatorCallbackActivity" />
+    [Activity(NoHistory = true, LaunchMode = LaunchMode.SingleTop)]
+    [IntentFilter(new[] { Android.Content.Intent.ActionView },
+        Categories = new[] { Android.Content.Intent.CategoryDefault, Android.Content.Intent.CategoryBrowsable },
+        DataScheme = XAppConstants.CALLBACK_SCHEME)]
+    public class WebAuthenticationCallbackActivity : Xamarin.Essentials.WebAuthenticatorCallbackActivity
+    {
     }
 }

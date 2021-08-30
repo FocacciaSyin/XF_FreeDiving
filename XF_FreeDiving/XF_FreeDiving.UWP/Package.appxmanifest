@@ -11,7 +11,7 @@
     Publisher="CN=Administrator"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="fcdc2c73-f1fd-424c-9b98-9632fab5d334" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="fcdc2c73-f1fd-424c-9b98-9632fab5d334" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
 
   <Properties>
     <DisplayName>XF_FreeDiving.UWP</DisplayName>
@@ -24,7 +24,7 @@
   </Dependencies>
 
   <Resources>
-    <Resource Language="x-generate"/>
+    <Resource Language="x-generate" />
   </Resources>
 
   <Applications>
@@ -37,9 +37,17 @@
         Square44x44Logo="Assets\Square44x44Logo.png"
         Description="XF_FreeDiving.UWP"
         BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
-        <uap:SplashScreen BackgroundColor="#474444" Image="Assets\SplashScreen.png"/>
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" />
+        <uap:SplashScreen BackgroundColor="#474444" Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
+
+      <Extensions>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="freediving">
+            <uap:DisplayName>FreeDiving</uap:DisplayName>
+          </uap:Protocol>
+        </uap:Extension>
+      </Extensions>
     </Application>
   </Applications>
 

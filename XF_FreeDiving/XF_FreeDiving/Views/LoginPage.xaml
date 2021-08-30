@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="XF_FreeDiving.Views.LoginPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="http://prismlibrary.com"
+    xmlns:viewmodels="clr-namespace:XF_FreeDiving.ViewModels"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    x:DataType="viewmodels:LoginPageViewModel">
+
+    <StackLayout Padding="40,0,40,0" VerticalOptions="Center">
+        <Button
+            x:Name="BtnGoogleLogin"
+            BackgroundColor="OrangeRed"
+            Command="{Binding GoogleLoginCommand}"
+            CornerRadius="20"
+            FontSize="Large"
+            HeightRequest="100"
+            Text="Google Login"
+            TextColor="White" />
+    </StackLayout>
+</ContentPage>
