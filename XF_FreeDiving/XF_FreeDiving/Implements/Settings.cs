@@ -85,6 +85,22 @@ namespace XF_FreeDiving.Implements
             }
         }
 
-
+        /// <summary>
+        /// 使用者Token
+        /// </summary>
+        /// <value>
+        /// The access token.
+        /// </value>
+        public static string AccessToken
+        {
+            get
+            {
+                return Preferences.Get("accestoken", SettingsDefault);
+            }
+            set
+            {
+                Preferences.Set("accestoken", value);
+            }
+        }
     }
 }
