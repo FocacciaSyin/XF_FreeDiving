@@ -35,7 +35,9 @@
 
   - [ ] 使用者
     - [x] 2020/11/03 先固定設定兩個使用者可以選擇即可
-    - [ ] 讓  `XamarinForms` 讀取使用者上傳的圖片
+    - [ ] 讓  `XamarinForms` 讀取Google UserInfo 並轉換為圖片
+    - [ ] 增加一個虛擬新增User的按鈕
+    - [ ] FireBase 結構調整為符合 Google登入的模式
     
   - [x] 紀錄種類
 
@@ -66,6 +68,12 @@
 - [x] 刪除功能
 
   - [ ] 使用SwipeView
+
+  
+  
+- [ ] UI-Test
+
+  - [ ] 看看怎摸做
 
   
 

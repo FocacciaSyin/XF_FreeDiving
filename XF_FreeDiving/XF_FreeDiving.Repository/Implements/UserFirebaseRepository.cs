@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Firebase.Database.Query;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,27 +11,15 @@ using XF_FreeDiving.Repository.Interfaces;
 namespace XF_FreeDiving.Repository.Implements
 {
     /// <summary>
-    ///
+    /// 使用FireBase處理使用者資料
     /// </summary>
-    /// <seealso cref="XF_FreeDiving.Repository.Interfaces.IDataStore{XF_FreeDiving.Repository.Entities.User}" />
     public class UserFirebaseRepository : IDataStore<User>
     {
         private readonly IFirebaseHelper _firebase;
-
+        private readonly string _DbName = "User";
         public UserFirebaseRepository(IFirebaseHelper firebase)
         {
             _firebase = firebase;
-        }
-
-        /// <summary>
-        /// 刪除資料
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public Task<bool> DeleteItemAsync(Guid id)
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -39,9 +28,17 @@ namespace XF_FreeDiving.Repository.Implements
         /// <param name="forceRefresh">if set to <c>true</c> [force refresh].</param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public Task<List<User>> GetAllAsync(bool forceRefresh = false)
+        public async Task<List<User>> GetAllAsync(bool forceRefresh = false)
         {
-            throw new NotImplementedException();
+            return (await _firebase.GetFirebaseClient()
+                    .Child(_DbName)
+                    .OnceAsync<User>())
+                .Select((item, i) => new User
+                {
+                    ID = item.Object.ID,
+                    UserName = item.Object.UserName,
+                    ImageURL = item.Object.ImageURL
+                }).ToList();
         }
 
         /// <summary>
@@ -50,9 +47,17 @@ namespace XF_FreeDiving.Repository.Implements
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public Task<User> GetByIdAsync(Guid id)
+        public async Task<User> GetByIdAsync(string id)
         {
-            throw new NotImplementedException();
+            return (await _firebase.GetFirebaseClient()
+                    .Child(_DbName)
+                    .OnceAsync<User>())
+                .Select((item, i) => new User
+                {
+                    ID = item.Object.ID,
+                    UserName = item.Object.UserName,
+                    ImageURL = item.Object.ImageURL
+                }).FirstOrDefault(p => p.ID == id);
         }
 
         /// <summary>
@@ -61,9 +66,21 @@ namespace XF_FreeDiving.Repository.Implements
         /// <param name="item">The item.</param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public Task<bool> InsertAsync(User item)
+        public async Task<bool> InsertAsync(User item)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var result = await _firebase
+                    .GetFirebaseClient()
+                    .Child(_DbName)
+                    .PostAsync(item, true);
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -72,9 +89,50 @@ namespace XF_FreeDiving.Repository.Implements
         /// <param name="item">The item.</param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public Task<bool> UpdateItemAsync(User item)
+        public async Task<bool> UpdateItemAsync(User item)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _firebase
+                    .GetFirebaseClient()
+                    .Child(_DbName)
+                    .PutAsync(item);
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 刪除資料
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<bool> DeleteItemAsync(string id)
+        {
+            try
+            {
+                var toDeletePerson =
+                    (await _firebase.GetFirebaseClient()
+                        .Child(_DbName)
+                        .OnceAsync<User>())
+                    .Where(a => a.Object.ID == id).FirstOrDefault();
+
+                await _firebase
+                    .GetFirebaseClient()
+                    .Child(_DbName)
+                    .Child(toDeletePerson.Key).DeleteAsync();
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
     }
 }

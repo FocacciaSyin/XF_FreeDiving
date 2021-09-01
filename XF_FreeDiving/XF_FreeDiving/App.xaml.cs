@@ -49,13 +49,16 @@ namespace XF_FreeDiving
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<AboutPage, AboutViewModel>();
+
             //[Repository]
             containerRegistry.RegisterScoped<ISQLiteHelper, DivingLogSQLiteHelper>();
             containerRegistry.RegisterScoped<IFirebaseHelper, DivingLogFirebaseHelper>();
             containerRegistry.RegisterScoped<IDataStore<DivingLog>, DivingLogFirebaseRepostiry>();
+            containerRegistry.RegisterScoped<IDataStore<User>, UserFirebaseRepository>();
 
             //[Service]
             containerRegistry.RegisterScoped<IDivingLogService, DivingLogService>();
+            containerRegistry.RegisterScoped<IUserService, UserService>();
 
             //[Regions]
             containerRegistry.RegisterRegionServices();

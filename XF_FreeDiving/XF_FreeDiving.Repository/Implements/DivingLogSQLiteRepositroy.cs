@@ -60,13 +60,16 @@ namespace XF_FreeDiving.Repository.Implements
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<bool> DeleteItemAsync(Guid id)
+        public async Task<bool> DeleteItemAsync(string id)
         {
             var item = await GetByIdAsync(id);
 
             if (item != null)
             {
-                var result = await _sQLiteHelper.GetSQLiteConnectionAsync().DeleteAsync(item);
+                var result = await _sQLiteHelper
+                    .GetSQLiteConnectionAsync()
+                    .DeleteAsync(item);
+
                 if (result > 0)
                     return true;
                 else
@@ -82,9 +85,17 @@ namespace XF_FreeDiving.Repository.Implements
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<DivingLog> GetByIdAsync(Guid id)
+        public async Task<DivingLog> GetByIdAsync(string id)
         {
-            return await _sQLiteHelper.GetSQLiteConnectionAsync().Table<DivingLog>().Where(i => i.ID == id).FirstOrDefaultAsync();
+            if(Guid.TryParse(id,out Guid guidID))
+            {
+                return await _sQLiteHelper
+                    .GetSQLiteConnectionAsync()
+                    .Table<DivingLog>().Where(i => i.ID == guidID)
+                    .FirstOrDefaultAsync();
+            }
+
+            return null;
         }
 
         /// <summary>

@@ -201,14 +201,14 @@
                             </ListView.ItemTemplate>
                         </ListView>
                     </xct:TabViewItem>
-                    <xct:TabViewItem
+                    <!--<xct:TabViewItem
                         FontAttributes="Bold"
                         FontSize="16"
                         Text="圖表"
                         TextColor="White"
                         TextColorSelected="Orange">
                         <microcharts:ChartView x:Name="ChartView" Chart="{Binding ChartData}" />
-                    </xct:TabViewItem>
+                    </xct:TabViewItem>-->
                 </xct:TabView>
             </Grid>
         </Grid>

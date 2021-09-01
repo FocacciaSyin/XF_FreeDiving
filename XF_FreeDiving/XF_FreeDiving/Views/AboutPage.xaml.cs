@@ -18,7 +18,7 @@ namespace XF_FreeDiving.Views
         public AboutPage()
         {
             InitializeComponent();
-            ChartView.Chart = new LineChart { Entries = entries };
+            //ChartView.Chart = new LineChart { Entries = entries };
         }
 
         private async void TapGestureRecognizer_Tapped(object sender, System.EventArgs e)

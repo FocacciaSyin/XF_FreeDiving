@@ -1,28 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using XF_FreeDiving.Repository.Entities;
 
-namespace XF_FreeDiving.Repository.Interfaces
+namespace XF_FreeDiving.Service.Interfaces
 {
-    /// <summary>
-    /// 共用基本對資料庫存取一定會用到的方法
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public interface IDataStore<T>
+    public interface IUserService
     {
         /// <summary>
         /// 新增單筆資料
         /// </summary>
         /// <param name="item">The item.</param>
         /// <returns></returns>
-        Task<bool> InsertAsync(T item);
+        Task<bool> InsertAsync(User item);
 
         /// <summary>
         /// 更新資料
         /// </summary>
         /// <param name="item">The item.</param>
         /// <returns></returns>
-        Task<bool> UpdateItemAsync(T item);
+        Task<bool> UpdateItemAsync(User item);
 
         /// <summary>
         /// 刪除資料
@@ -36,14 +35,13 @@ namespace XF_FreeDiving.Repository.Interfaces
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        Task<T> GetByIdAsync(string id);
-
+        Task<User> GetByIdAsync(string id);
 
         /// <summary>
         /// 取得所有資料
         /// </summary>
-        /// <param name="forceRefresh">if set to <c>true</c> [force refresh].</param>
         /// <returns></returns>
-        Task<List<T>> GetAllAsync(bool forceRefresh = false);
+        Task<List<User>> GetAllAsync();
+
     }
 }

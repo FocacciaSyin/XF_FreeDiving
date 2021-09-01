@@ -3,6 +3,7 @@
     x:Class="XF_FreeDiving.Views.Controls.Users"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:about="clr-namespace:XF_FreeDiving.ViewModels.About"
     xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView">
 
     <ContentView.Resources>
@@ -68,7 +69,7 @@
                                 Aspect="AspectFill"
                                 HorizontalOptions="Center"
                                 Opacity=".8"
-                                Source="{Binding ImagePath}"
+                                Source="{Binding ImageURL}"
                                 VerticalOptions="Center" />
                         </yummy:PancakeView>
                         <Label

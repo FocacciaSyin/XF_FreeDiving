@@ -10,7 +10,7 @@ using XF_FreeDiving.Repository.Interfaces;
 namespace XF_FreeDiving.Repository.Implements
 {
     /// <summary>
-    /// 使用FireBase進行資料處理
+    /// 使用FireBase處理閉氣紀錄
     /// </summary>
     /// <seealso cref="DivingLog"/>
     public class DivingLogFirebaseRepostiry : IDataStore<DivingLog>
@@ -77,20 +77,28 @@ namespace XF_FreeDiving.Repository.Implements
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public async Task<bool> DeleteItemAsync(Guid id)
+        public async Task<bool> DeleteItemAsync(string id)
         {
             try
             {
-                var toDeletePerson =
-                    (await _firebase.GetFirebaseClient()
-                    .Child("DivingLog")
-                    .OnceAsync<DivingLog>())
-                    .Where(a => a.Object.ID == id).FirstOrDefault();
+                if (Guid.TryParse(id, out Guid guidId))
+                {
+                    var toDeletePerson =
+                        (await _firebase.GetFirebaseClient()
+                            .Child("DivingLog")
+                            .OnceAsync<DivingLog>())
+                        .Where(a => a.Object.ID == guidId).FirstOrDefault();
 
-                await _firebase
-                    .GetFirebaseClient()
-                    .Child("DivingLog")
-                    .Child(toDeletePerson.Key).DeleteAsync();
+                    await _firebase
+                        .GetFirebaseClient()
+                        .Child("DivingLog")
+                        .Child(toDeletePerson.Key).DeleteAsync();
+                }
+                else
+                {
+                    return false;
+                }
+              
 
                 return true;
             }
@@ -106,14 +114,21 @@ namespace XF_FreeDiving.Repository.Implements
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public async Task<DivingLog> GetByIdAsync(Guid id)
+        public async Task<DivingLog> GetByIdAsync(string id)
         {
-            var allPersons = await GetAllAsync();
-            await _firebase.GetFirebaseClient()
-                .Child("DivingLog")
-                .OnceAsync<DivingLog>();
+            if (Guid.TryParse(id, out Guid guidId))
+            {
+                var allPersons = await GetAllAsync();
+                await _firebase.GetFirebaseClient()
+                    .Child("DivingLog")
+                    .OnceAsync<DivingLog>();
 
-            return allPersons.Where(item => item.ID == id).FirstOrDefault();
+                return allPersons.Where(item => item.ID == guidId).FirstOrDefault();
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
